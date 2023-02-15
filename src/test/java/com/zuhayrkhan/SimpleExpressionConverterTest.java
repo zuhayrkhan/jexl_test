@@ -12,10 +12,10 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HttpTargetChangerTest {
+class SimpleExpressionConverterTest {
 
     private final Clock clock = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
-    private HttpTargetChanger httpTargetChanger;
+    private SimpleExpressionConverter simpleExpressionConverter;
 
     public static Stream<Arguments> createURIStringsAndExpected() {
         return Stream.of(
@@ -45,7 +45,7 @@ class HttpTargetChangerTest {
 
     @BeforeEach
     void setUp() {
-        httpTargetChanger = new HttpTargetChanger(clock);
+        simpleExpressionConverter = new SimpleExpressionConverter(clock);
     }
 
 
@@ -53,7 +53,7 @@ class HttpTargetChangerTest {
     @MethodSource("createURIStringsAndExpected")
     void can_specify_target_with_date_vars_and_have_them_converted(String httpTargetURIAsString, String expected) {
 
-        String converted = httpTargetChanger.convert(httpTargetURIAsString);
+        String converted = simpleExpressionConverter.convert(httpTargetURIAsString);
 
         assertThat(converted).isNotBlank().isEqualTo(expected);
 

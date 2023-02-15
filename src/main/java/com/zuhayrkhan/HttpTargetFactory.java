@@ -6,15 +6,15 @@ import java.net.URI;
 
 public class HttpTargetFactory {
 
-    private final HttpTargetChanger httpTargetChanger;
+    private final SimpleExpressionConverter simpleExpressionConverter;
 
-    public HttpTargetFactory(HttpTargetChanger httpTargetChanger) {
-        this.httpTargetChanger = httpTargetChanger;
+    public HttpTargetFactory(SimpleExpressionConverter simpleExpressionConverter) {
+        this.simpleExpressionConverter = simpleExpressionConverter;
     }
 
     public HttpTarget createHttpTarget(String uriAsString, String body) {
-        return new HttpTarget(URI.create(httpTargetChanger.convert(uriAsString)),
-                httpTargetChanger.convert(body)
+        return new HttpTarget(URI.create(simpleExpressionConverter.convert(uriAsString)),
+                simpleExpressionConverter.convert(body)
         );
     }
 

@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
 
-public class HttpTargetChanger {
+public class SimpleExpressionConverter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HttpTargetChanger.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleExpressionConverter.class);
     public static final String CLOCK_IN_CONTEXT = "clock";
 
     private final Clock clock;
 
     private final JexlEngine jexlEngine = new JexlBuilder().cache(512).strict(true).silent(false).create();
 
-    public HttpTargetChanger(Clock clock) {
+    public SimpleExpressionConverter(Clock clock) {
         this.clock = clock;
     }
 

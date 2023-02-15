@@ -21,7 +21,7 @@ class HttpTargetFactoryTest {
 
     @BeforeEach
     void setUp() {
-        httpTargetFactory = new HttpTargetFactory(new HttpTargetChanger(clock));
+        httpTargetFactory = new HttpTargetFactory(new SimpleExpressionConverter(clock));
     }
 
     public static Stream<Arguments> createURIStringsAndExpected() {
