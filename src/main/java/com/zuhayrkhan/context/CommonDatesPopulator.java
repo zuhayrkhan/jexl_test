@@ -1,5 +1,6 @@
 package com.zuhayrkhan.context;
 
+import com.zuhayrkhan.HttpTargetChanger;
 import org.apache.commons.jexl3.JexlContext;
 
 import java.time.Clock;
@@ -12,7 +13,7 @@ public class CommonDatesPopulator {
 
     public static void addCommonDatesToContext(JexlContext context) {
 
-        Clock clock = (Clock) context.get("clock");
+        Clock clock = (Clock) context.get(HttpTargetChanger.CLOCK_IN_CONTEXT);
 
         ZonedDateTime today = ZonedDateTime.now(clock).truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime yesterday = today.minus(Period.ofDays(1));

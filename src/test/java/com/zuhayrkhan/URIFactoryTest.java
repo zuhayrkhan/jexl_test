@@ -23,13 +23,19 @@ class URIFactoryTest {
     @Test
     void can_create_URI_from_URI_with_date_vars_and_have_them_converted() {
 
-        URI reportsURI = uriFactory.createURI("http://localhost:8080/reports/?fromDate=${yesterday}&untilDate=${today}");
+        URI reportsURI = uriFactory.createURI("http://localhost:8080/reports/" +
+                "?fromDate=${yesterday}" +
+                "&untilDate=${today}" +
+                "&constant=aConstant"
+        );
 
         assertThat(reportsURI)
                 .isNotNull()
                 .isEqualTo(URI.create("http://localhost:8080/reports/" +
                         "?fromDate=1969-12-31T00:00:00Z" +
-                        "&untilDate=1970-01-01T00:00:00Z"))
+                        "&untilDate=1970-01-01T00:00:00Z" +
+                        "&constant=aConstant"
+                ))
         ;
 
     }

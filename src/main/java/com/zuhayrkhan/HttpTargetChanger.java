@@ -14,6 +14,7 @@ import java.time.Clock;
 public class HttpTargetChanger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpTargetChanger.class);
+    public static final String CLOCK_IN_CONTEXT = "clock";
 
     private final Clock clock;
 
@@ -24,10 +25,36 @@ public class HttpTargetChanger {
     }
 
     private static String createJexlExpression(String httpTargetURIAsString) {
-        return "'" + httpTargetURIAsString
-                .replace("${", "' + ")
-                .replaceAll("}([^$]*)", " + '$1")
-                .replaceAll("}$", "");
+
+        String[] splitEntries = httpTargetURIAsString.split("\\$\\{|}");
+
+        LOGGER.info("splitEntries={}", splitEntries);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0, splitEntriesLength = splitEntries.length; i < splitEntriesLength; i++) {
+
+            boolean isEvenIndex = i % 2 == 0;
+
+            String splitEntry = splitEntries[i];
+
+            if (isEvenIndex) {
+                if (i != 0) {
+                    stringBuilder.append(" + ");
+                }
+                stringBuilder.append("'");
+                stringBuilder.append(splitEntry);
+                stringBuilder.append("'");
+                if (i + 1 != splitEntries.length) {
+                    stringBuilder.append(" + ");
+                }
+            } else {
+                stringBuilder.append(splitEntry);
+            }
+        }
+
+        return stringBuilder.toString();
+
     }
 
     public String convert(String httpTargetURIAsString) {
@@ -41,7 +68,7 @@ public class HttpTargetChanger {
         JexlExpression jexlExpression = jexlEngine.createExpression(httpTargetURIAsJexlExpression);
 
         JexlContext jexlContext = new JexlContextBuilder()
-                .populateFrom(context -> context.set("clock", clock))
+                .populateFrom(context -> context.set(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
                 .build();
 
