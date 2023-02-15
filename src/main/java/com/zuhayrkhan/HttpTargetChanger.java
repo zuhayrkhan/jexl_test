@@ -1,63 +1,55 @@
 package com.zuhayrkhan;
 
-import org.apache.commons.jexl3.*;
+import com.zuhayrkhan.context.CommonDatesPopulator;
+import com.zuhayrkhan.context.JexlContextBuilder;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlContext;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Period;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Clock;
 
 public class HttpTargetChanger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpTargetChanger.class);
 
-    private final JexlEngine jexl = new JexlBuilder().cache(512).strict(true).silent(false).create();
+    private final Clock clock;
 
-    public static void main(String[] args) {
-        new HttpTargetChanger();
+    private final JexlEngine jexlEngine = new JexlBuilder().cache(512).strict(true).silent(false).create();
+
+    public HttpTargetChanger(Clock clock) {
+        this.clock = clock;
     }
 
-    public HttpTargetChanger() {
-
-        // Assuming we have a JexlEngine instance initialized in our class named 'jexl':
-        // Create an expression object for our calculation
-        String httpTargetURIAsString = "http://localhost:8080/fromDate=${yesterday}&untilDate=${today}";
-
-        LOGGER.info("httpTargetURIAsString={}", httpTargetURIAsString);
-
-        String httpTargetURIAsJexlExpression = "'" + httpTargetURIAsString
+    private static String createJexlExpression(String httpTargetURIAsString) {
+        return "'" + httpTargetURIAsString
                 .replace("${", "' + ")
                 .replaceAll("}([^$]*)", " + '$1")
                 .replaceAll("}$", "");
+    }
+
+    public String convert(String httpTargetURIAsString) {
+
+        LOGGER.info("httpTargetURIAsString={}", httpTargetURIAsString);
+
+        String httpTargetURIAsJexlExpression = createJexlExpression(httpTargetURIAsString);
 
         LOGGER.info("httpTargetURIAsJexlExpression={}", httpTargetURIAsJexlExpression);
 
-        JexlScript script = jexl.createScript("var yesterday;\n" +
-                "var url = 'http://localhost:8080/fromDate=${yesterday}'\n" +
-                "return url;");
+        JexlExpression jexlExpression = jexlEngine.createExpression(httpTargetURIAsJexlExpression);
 
-        JexlExpression jexlExpression = jexl.createExpression(httpTargetURIAsJexlExpression);
+        JexlContext jexlContext = new JexlContextBuilder()
+                .populateFrom(context -> context.set("clock", clock))
+                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
+                .build();
 
-        // populate the context
-        JexlContext context = new MapContext();
-
-        ZonedDateTime today = ZonedDateTime.now();
-        ZonedDateTime yesterday = today.minus(Period.ofDays(1));
-        ZonedDateTime tomorrow = today.plus(Period.ofDays(1));
-
-        context.set("today", today.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        context.set("yesterday", yesterday.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        context.set("tomorrow", tomorrow.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-
-        // ...
-
-        // work it out
-        String result = (String) jexlExpression.evaluate(context);
-//        String result = (String) script.execute(context);
+        String result = (String) jexlExpression.evaluate(jexlContext);
 
         LOGGER.info("result={}", result);
 
+        return result;
     }
 
 }
