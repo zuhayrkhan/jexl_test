@@ -21,7 +21,7 @@ public class CommonDatesPopulator {
 
         context.set("today", today.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
         context.set("yesterday", yesterday.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        context.set("tomorrow", tomorrow.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        context.set("tomorrow", tomorrow.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
     }
 }

@@ -55,14 +55,7 @@ class HttpTargetChangerTest {
 
         String converted = httpTargetChanger.convert(httpTargetURIAsString);
 
-        assertThat(converted)
-                .isNotBlank().isEqualTo(expected)
-//                .isEqualTo("http://localhost:8080/reports/" +
-//                        "?fromDate=1969-12-31T00:00:00Z" +
-//                        "&untilDate=1970-01-01T00:00:00Z" +
-//                        "&constant=aConstant"
-//                )
-        ;
+        assertThat(converted).isNotBlank().isEqualTo(expected);
 
     }
 
