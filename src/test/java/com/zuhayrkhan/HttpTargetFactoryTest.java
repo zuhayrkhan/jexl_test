@@ -2,7 +2,6 @@ package com.zuhayrkhan;
 
 import com.zuhayrkhan.model.HttpTarget;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -68,27 +67,6 @@ class HttpTargetFactoryTest {
         assertThat(httpTarget)
                 .isNotNull()
                 .isEqualTo(new HttpTarget(URI.create(expectedURI), expectedBody));
-
-    }
-
-    @Test
-    void tt() {
-
-        HttpTarget httpTarget = httpTargetFactory.createHttpTarget("http://localhost:8080/reports/" +
-                        "?fromDate=${yesterday}" +
-                        "&untilDate=${today}" +
-                        "&constant=aConstant",
-                "${tomorrow}");
-
-        assertThat(httpTarget)
-                .isNotNull()
-                .isEqualTo(new HttpTarget(URI.create("http://localhost:8080/reports/" +
-                        "?fromDate=1969-12-31T00:00:00Z" +
-                        "&untilDate=1970-01-01T00:00:00Z" +
-                        "&constant=aConstant"),
-                        "1970-01-02T00:00:00Z"
-                ))
-        ;
 
     }
 
