@@ -65,32 +65,32 @@ class HttpTargetFactoryTest {
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}"
                         , "${tomorrow}"
-                        , "${today}",
-                        "http://localhost:8080/reports/" +
-                                "?fromDate=1969-12-31T00:00:00Z" +
-                                "&untilDate=1970-01-01T00:00:00Z",
-                        "1970-01-02T00:00:00Z",
-                        "1970-01-01T00:00:00Z"),
+                        , "${today}"
+                        , "http://localhost:8080/reports/" +
+                        "?fromDate=1969-12-31T00:00:00Z" +
+                        "&untilDate=1970-01-01T00:00:00Z"
+                        , "1970-01-02T00:00:00Z"
+                        , "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}" +
                         "&constant=aConstant"
                         , "${tomorrow}"
-                        , "${today}",
-                        "http://localhost:8080/reports/" +
-                                "?fromDate=1969-12-31T00:00:00Z" +
-                                "&untilDate=1970-01-01T00:00:00Z" +
-                                "&constant=aConstant",
-                        "1970-01-02T00:00:00Z",
-                        "1970-01-01T00:00:00Z"),
+                        , "${today}"
+                        , "http://localhost:8080/reports/" +
+                        "?fromDate=1969-12-31T00:00:00Z" +
+                        "&untilDate=1970-01-01T00:00:00Z" +
+                        "&constant=aConstant"
+                        , "1970-01-02T00:00:00Z"
+                        , "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?constant=aConstant"
                         , "blah"
-                        , null,
-                        "http://localhost:8080/reports/" +
-                                "?constant=aConstant"
-                        , "blah",
-                        null)
+                        , null
+                        , "http://localhost:8080/reports/" +
+                        "?constant=aConstant"
+                        , "blah"
+                        , null)
         );
     }
 
