@@ -3,6 +3,8 @@ package com.zuhayrkhan;
 import com.zuhayrkhan.model.HttpTarget;
 
 import java.net.URI;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class HttpTargetFactory {
 
@@ -17,8 +19,14 @@ public class HttpTargetFactory {
                                        String responseMatchForSuccess) {
         return new HttpTarget(URI.create(simpleExpressionConverter.convert(uriAsString)),
                 simpleExpressionConverter.convert(body),
-                simpleExpressionConverter.convert(responseMatchForSuccess)
+                createPattern(responseMatchForSuccess)
         );
+    }
+
+    private Pattern createPattern(String responseMatchForSuccess) {
+        return Optional.ofNullable(responseMatchForSuccess)
+                .map(s -> Pattern.compile(simpleExpressionConverter.convert(responseMatchForSuccess)))
+                .orElse(null);
     }
 
 }

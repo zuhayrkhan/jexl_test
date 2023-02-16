@@ -2,14 +2,15 @@ package com.zuhayrkhan.model;
 
 import java.net.URI;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class HttpTarget {
 
     private final URI uri;
     private final String body;
-    private final String responseMatchForSuccess;
+    private final Pattern responseMatchForSuccess;
 
-    public HttpTarget(URI uri, String body, String responseMatchForSuccess) {
+    public HttpTarget(URI uri, String body, Pattern responseMatchForSuccess) {
         this.uri = uri;
         this.body = body;
         this.responseMatchForSuccess = responseMatchForSuccess;
@@ -23,7 +24,7 @@ public class HttpTarget {
         return body;
     }
 
-    public String getResponseMatchForSuccess() {
+    public Pattern getResponseMatchForSuccess() {
         return responseMatchForSuccess;
     }
 
