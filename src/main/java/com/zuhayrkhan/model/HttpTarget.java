@@ -7,10 +7,12 @@ public class HttpTarget {
 
     private final URI uri;
     private final String body;
+    private final String responseMatchForSuccess;
 
-    public HttpTarget(URI uri, String body) {
+    public HttpTarget(URI uri, String body, String responseMatchForSuccess) {
         this.uri = uri;
         this.body = body;
+        this.responseMatchForSuccess = responseMatchForSuccess;
     }
 
     public URI getUri() {
@@ -21,17 +23,21 @@ public class HttpTarget {
         return body;
     }
 
+    public String getResponseMatchForSuccess() {
+        return responseMatchForSuccess;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HttpTarget that = (HttpTarget) o;
-        return Objects.equals(uri, that.uri) && Objects.equals(body, that.body);
+        return Objects.equals(uri, that.uri) && Objects.equals(body, that.body) && Objects.equals(responseMatchForSuccess, that.responseMatchForSuccess);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uri, body);
+        return Objects.hash(uri, body, responseMatchForSuccess);
     }
 
     @Override
@@ -39,6 +45,7 @@ public class HttpTarget {
         return "HttpTarget{" +
                 "uri=" + uri +
                 ", body='" + body + '\'' +
+                ", responseMatchForSuccess='" + responseMatchForSuccess + '\'' +
                 '}';
     }
 }

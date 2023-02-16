@@ -12,9 +12,12 @@ public class HttpTargetFactory {
         this.simpleExpressionConverter = simpleExpressionConverter;
     }
 
-    public HttpTarget createHttpTarget(String uriAsString, String body) {
+    public HttpTarget createHttpTarget(String uriAsString,
+                                       String body,
+                                       String responseMatchForSuccess) {
         return new HttpTarget(URI.create(simpleExpressionConverter.convert(uriAsString)),
-                simpleExpressionConverter.convert(body)
+                simpleExpressionConverter.convert(body),
+                simpleExpressionConverter.convert(responseMatchForSuccess)
         );
     }
 

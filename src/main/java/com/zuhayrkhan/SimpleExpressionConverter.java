@@ -24,9 +24,13 @@ public class SimpleExpressionConverter {
         this.clock = clock;
     }
 
-    private static String createJexlExpression(String httpTargetURIAsString) {
+    private static String createJexlExpression(String expressionToBeConverted) {
 
-        String[] splitEntries = httpTargetURIAsString.split("\\$\\{|}");
+        if (expressionToBeConverted == null) {
+            return null;
+        }
+
+        String[] splitEntries = expressionToBeConverted.split("\\$\\{|}");
 
         LOGGER.info("splitEntries={}", splitEntries);
 
@@ -60,6 +64,10 @@ public class SimpleExpressionConverter {
     public String convert(String httpTargetURIAsString) {
 
         LOGGER.info("httpTargetURIAsString={}", httpTargetURIAsString);
+
+        if (httpTargetURIAsString == null) {
+            return null;
+        }
 
         String httpTargetURIAsJexlExpression = createJexlExpression(httpTargetURIAsString);
 

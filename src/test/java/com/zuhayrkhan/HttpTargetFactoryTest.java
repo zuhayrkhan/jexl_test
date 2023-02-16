@@ -26,17 +26,23 @@ class HttpTargetFactoryTest {
     static class HttpTargetTestParams {
         private final String httpTargetURIAsString;
         private final String body;
+        private final String responseMatchForSuccess;
         private final String expectedURI;
         private final String expectedBody;
+        private final String expectedResponseMatchForSuccess;
 
         HttpTargetTestParams(String httpTargetURIAsString,
                              String body,
+                             String responseMatchForSuccess,
                              String expectedURI,
-                             String expectedBody) {
+                             String expectedBody,
+                             String expectedResponseMatchForSuccess) {
             this.httpTargetURIAsString = httpTargetURIAsString;
             this.body = body;
+            this.responseMatchForSuccess = responseMatchForSuccess;
             this.expectedURI = expectedURI;
             this.expectedBody = expectedBody;
+            this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
         }
 
     }
@@ -47,26 +53,32 @@ class HttpTargetFactoryTest {
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}"
                         , "${tomorrow}"
-                        , "http://localhost:8080/reports/" +
-                        "?fromDate=1969-12-31T00:00:00Z" +
-                        "&untilDate=1970-01-01T00:00:00Z",
-                        "1970-01-02T00:00:00Z"),
+                        , "${today}",
+                        "http://localhost:8080/reports/" +
+                                "?fromDate=1969-12-31T00:00:00Z" +
+                                "&untilDate=1970-01-01T00:00:00Z",
+                        "1970-01-02T00:00:00Z",
+                        "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}" +
                         "&constant=aConstant"
                         , "${tomorrow}"
-                        , "http://localhost:8080/reports/" +
-                        "?fromDate=1969-12-31T00:00:00Z" +
-                        "&untilDate=1970-01-01T00:00:00Z" +
-                        "&constant=aConstant",
-                        "1970-01-02T00:00:00Z"),
+                        , "${today}",
+                        "http://localhost:8080/reports/" +
+                                "?fromDate=1969-12-31T00:00:00Z" +
+                                "&untilDate=1970-01-01T00:00:00Z" +
+                                "&constant=aConstant",
+                        "1970-01-02T00:00:00Z",
+                        "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?constant=aConstant"
                         , "blah"
-                        , "http://localhost:8080/reports/" +
-                        "?constant=aConstant"
-                        , "blah")
+                        , null,
+                        "http://localhost:8080/reports/" +
+                                "?constant=aConstant"
+                        , "blah",
+                        null)
         );
     }
 
@@ -76,13 +88,16 @@ class HttpTargetFactoryTest {
 
         HttpTarget httpTarget = httpTargetFactory.createHttpTarget(
                 httpTargetTestParams.httpTargetURIAsString,
-                httpTargetTestParams.body);
+                httpTargetTestParams.body,
+                httpTargetTestParams.responseMatchForSuccess);
 
         assertThat(httpTarget)
                 .isNotNull()
                 .isEqualTo(new HttpTarget(
                         URI.create(httpTargetTestParams.expectedURI),
-                        httpTargetTestParams.expectedBody));
+                        httpTargetTestParams.expectedBody,
+                        httpTargetTestParams.expectedResponseMatchForSuccess)
+                );
 
     }
 
