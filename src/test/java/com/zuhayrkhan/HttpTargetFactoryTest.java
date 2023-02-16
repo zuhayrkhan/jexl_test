@@ -45,6 +45,18 @@ class HttpTargetFactoryTest {
             this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
         }
 
+        @Override
+        public String toString() {
+            return "HttpTargetTestParams{" +
+                    "httpTargetURIAsString='" + httpTargetURIAsString + '\'' +
+                    ", body='" + body + '\'' +
+                    ", responseMatchForSuccess='" + responseMatchForSuccess + '\'' +
+                    ", expectedURI='" + expectedURI + '\'' +
+                    ", expectedBody='" + expectedBody + '\'' +
+                    ", expectedResponseMatchForSuccess='" + expectedResponseMatchForSuccess + '\'' +
+                    '}';
+        }
+
     }
 
     public static Stream<HttpTargetTestParams> createURIStringsAndExpected() {

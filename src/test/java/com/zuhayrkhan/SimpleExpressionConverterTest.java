@@ -26,6 +26,13 @@ class SimpleExpressionConverterTest {
             this.expectedURI = expectedURI;
         }
 
+        @Override
+        public String toString() {
+            return "SimpleExpressionConverterParams{" +
+                    "httpTargetURIAsString='" + httpTargetURIAsString + '\'' +
+                    ", expectedURI='" + expectedURI + '\'' +
+                    '}';
+        }
     }
 
     public static Stream<SimpleExpressionConverterParams> createURIStringsAndExpected() {
