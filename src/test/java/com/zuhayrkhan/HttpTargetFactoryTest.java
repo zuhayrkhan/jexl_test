@@ -9,7 +9,6 @@ import java.net.URI;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,14 +29,14 @@ class HttpTargetFactoryTest {
         private final String responseMatchForSuccess;
         private final String expectedURI;
         private final String expectedBody;
-        private final Pattern expectedResponseMatchForSuccess;
+        private final String expectedResponseMatchForSuccess;
 
         HttpTargetTestParams(String httpTargetURIAsString,
                              String body,
                              String responseMatchForSuccess,
                              String expectedURI,
                              String expectedBody,
-                             Pattern expectedResponseMatchForSuccess) {
+                             String expectedResponseMatchForSuccess) {
             this.httpTargetURIAsString = httpTargetURIAsString;
             this.body = body;
             this.responseMatchForSuccess = responseMatchForSuccess;
@@ -71,7 +70,7 @@ class HttpTargetFactoryTest {
                         "?fromDate=1969-12-31T00:00:00Z" +
                         "&untilDate=1970-01-01T00:00:00Z"
                         , "1970-01-02T00:00:00Z"
-                        , Pattern.compile("1970-01-01T00:00:00Z")),
+                        , "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}" +
@@ -83,7 +82,7 @@ class HttpTargetFactoryTest {
                         "&untilDate=1970-01-01T00:00:00Z" +
                         "&constant=aConstant"
                         , "1970-01-02T00:00:00Z"
-                        , Pattern.compile("1970-01-01T00:00:00Z")),
+                        , "1970-01-01T00:00:00Z"),
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?constant=aConstant"
                         , "blah"

@@ -2,15 +2,18 @@ package com.zuhayrkhan.model;
 
 import java.net.URI;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 public class HttpTarget {
 
     private final URI uri;
     private final String body;
-    private final Pattern responseMatchForSuccess;
+    private final String responseMatchForSuccess;
+    private final AtomicReference<Pattern> responsePatternSingleton = new AtomicReference<>();
 
-    public HttpTarget(URI uri, String body, Pattern responseMatchForSuccess) {
+    public HttpTarget(URI uri, String body, String responseMatchForSuccess) {
         this.uri = uri;
         this.body = body;
         this.responseMatchForSuccess = responseMatchForSuccess;
@@ -24,8 +27,21 @@ public class HttpTarget {
         return body;
     }
 
-    public Pattern getResponseMatchForSuccess() {
-        return responseMatchForSuccess;
+    private Pattern getPatternResponseMatchForSuccess() {
+        return Optional.ofNullable(responsePatternSingleton.get())
+                .map(pattern -> {
+                    if (responsePatternSingleton.compareAndSet(null,
+                            Pattern.compile(responseMatchForSuccess))) {
+                        return pattern;
+                    } else {
+                        return responsePatternSingleton.get();
+                    }
+                })
+                .orElseThrow();
+    }
+
+    public boolean checkResponseBodyForSuccess(String responseBody) {
+        return getPatternResponseMatchForSuccess().matcher(responseBody).matches();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class HttpTargetFactory {
                                        String responseMatchForSuccess) {
         return new HttpTarget(URI.create(simpleExpressionConverter.convert(uriAsString)),
                 simpleExpressionConverter.convert(body),
-                createPattern(responseMatchForSuccess)
+                simpleExpressionConverter.convert(responseMatchForSuccess)
         );
     }
 
