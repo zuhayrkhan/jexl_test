@@ -29,19 +29,19 @@ public class HttpTarget {
 
     private Pattern getPatternResponseMatchForSuccess() {
         return Optional.ofNullable(responsePatternSingleton.get())
-                .map(pattern -> {
-                    if (responsePatternSingleton.compareAndSet(null,
-                            Pattern.compile(responseMatchForSuccess))) {
-                        return pattern;
+                .or(() -> {
+                    Pattern myPattern = Pattern.compile(responseMatchForSuccess);
+                    if (responsePatternSingleton.compareAndSet(null, myPattern)) {
+                        return Optional.of(myPattern);
                     } else {
-                        return responsePatternSingleton.get();
+                        return Optional.of(responsePatternSingleton.get());
                     }
                 })
                 .orElseThrow();
     }
 
     public boolean checkResponseBodyForSuccess(String responseBody) {
-        return getPatternResponseMatchForSuccess().matcher(responseBody).matches();
+        return getPatternResponseMatchForSuccess().matcher(responseBody).find();
     }
 
     @Override
