@@ -1,9 +1,9 @@
-package com.zuhayrkhan;
+package com.zuhayrkhan.converter.strategy;
 
 import com.zuhayrkhan.context.CommonDatesPopulator;
 import com.zuhayrkhan.context.JexlContextBuilder;
+import com.zuhayrkhan.context.JexlContextHolder;
 import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 import org.slf4j.Logger;
@@ -12,17 +12,36 @@ import org.slf4j.LoggerFactory;
 import java.time.Clock;
 import java.util.Arrays;
 
-public class SimpleExpressionConverter {
+public class JexlConverterStrategy implements ConverterStrategy<JexlContextHolder> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleExpressionConverter.class);
-    public static final String CLOCK_IN_CONTEXT = "clock";
+    private static final Logger LOGGER = LoggerFactory.getLogger(JexlConverterStrategy.class);
 
     private final Clock clock;
 
     private final JexlEngine jexlEngine = new JexlBuilder().cache(512).strict(true).silent(false).create();
 
-    public SimpleExpressionConverter(Clock clock) {
+    public JexlConverterStrategy(Clock clock) {
         this.clock = clock;
+    }
+
+    @Override
+    public JexlContextHolder createContextHolder() {
+        return new JexlContextBuilder()
+                .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
+                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
+                .build();
+    }
+
+    @Override
+    public String doConvert(JexlContextHolder jexlContextHolder, String input) {
+
+        String httpTargetURIAsJexlExpression = createJexlExpression(input);
+
+        LOGGER.info("httpTargetURIAsJexlExpression={}", httpTargetURIAsJexlExpression);
+
+        JexlExpression jexlExpression = jexlEngine.createExpression(httpTargetURIAsJexlExpression);
+
+        return (String) jexlExpression.evaluate(jexlContextHolder.unWrapContext());
     }
 
     private static String createJexlExpression(String expressionToBeConverted) {
@@ -62,30 +81,5 @@ public class SimpleExpressionConverter {
 
     }
 
-    public String convert(String httpTargetURIAsString) {
-
-        LOGGER.info("httpTargetURIAsString={}", httpTargetURIAsString);
-
-        if (httpTargetURIAsString == null) {
-            return null;
-        }
-
-        String httpTargetURIAsJexlExpression = createJexlExpression(httpTargetURIAsString);
-
-        LOGGER.info("httpTargetURIAsJexlExpression={}", httpTargetURIAsJexlExpression);
-
-        JexlExpression jexlExpression = jexlEngine.createExpression(httpTargetURIAsJexlExpression);
-
-        JexlContext jexlContext = new JexlContextBuilder()
-                .populateFrom(context -> context.set(CLOCK_IN_CONTEXT, clock))
-                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
-                .build();
-
-        String result = (String) jexlExpression.evaluate(jexlContext);
-
-        LOGGER.info("result={}", result);
-
-        return result;
-    }
 
 }

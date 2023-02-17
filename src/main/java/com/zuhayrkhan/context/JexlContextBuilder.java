@@ -1,29 +1,30 @@
 package com.zuhayrkhan.context;
 
-import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.MapContext;
 
 import java.util.function.Consumer;
 
-public class JexlContextBuilder {
+public class JexlContextBuilder implements ContextBuilder<JexlContextHolder> {
 
-    private final JexlContext jexlContext;
+    private final JexlContextHolder jexlContextHolder;
 
     public JexlContextBuilder() {
-        this(new MapContext());
+        this(new JexlContextHolder(new MapContext()));
     }
 
-    public JexlContextBuilder(JexlContext jexlContext) {
-        this.jexlContext = jexlContext;
+    public JexlContextBuilder(JexlContextHolder jexlContextHolder) {
+        this.jexlContextHolder = jexlContextHolder;
     }
 
-    public JexlContextBuilder populateFrom(Consumer<JexlContext> contextConsumer) {
-        contextConsumer.accept(jexlContext);
+    @Override
+    public ContextBuilder<JexlContextHolder> populateFrom(Consumer<JexlContextHolder> contextHolderConsumer) {
+        contextHolderConsumer.accept(jexlContextHolder);
         return this;
     }
 
-    public JexlContext build() {
-        return jexlContext;
+    @Override
+    public JexlContextHolder build() {
+        return jexlContextHolder;
     }
 
 }
