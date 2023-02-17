@@ -63,11 +63,13 @@ class HttpTargetFactoryTest {
         return Stream.of(
                 new HttpTargetTestParams("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
+                        "&anotherParam=anotherValue" +
                         "&untilDate=${today}"
                         , "${tomorrow}"
                         , "${today}"
                         , "http://localhost:8080/reports/" +
                         "?fromDate=1969-12-31T00:00:00Z" +
+                        "&anotherParam=anotherValue" +
                         "&untilDate=1970-01-01T00:00:00Z"
                         , "1970-01-02T00:00:00Z"
                         , "1970-01-01T00:00:00Z"),

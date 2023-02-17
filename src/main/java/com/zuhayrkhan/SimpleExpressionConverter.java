@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
+import java.util.Arrays;
 
 public class SimpleExpressionConverter {
 
@@ -32,7 +33,7 @@ public class SimpleExpressionConverter {
 
         String[] splitEntries = expressionToBeConverted.split("\\$\\{|}");
 
-        LOGGER.info("splitEntries={}", splitEntries);
+        LOGGER.debug("splitEntries={}", Arrays.toString(splitEntries));
 
         StringBuilder stringBuilder = new StringBuilder();
 
