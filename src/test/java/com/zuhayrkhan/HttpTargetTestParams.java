@@ -6,8 +6,11 @@ import com.zuhayrkhan.converter.context.ContextHolder;
 class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
         CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
-    static HttpTargetTestParams.Builder httpTargetTestParamsWithSomeConstAmongVars() {
-        return new Builder()
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithSomeConstAmongVars(
+            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
+        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&anotherParam=anotherValue" +
@@ -24,8 +27,11 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
                 .withExpectedResponseMatchForSuccess("1970-01-01T00:00:00Z");
     }
 
-    static HttpTargetTestParams.Builder httpTargetTestParamsWithSomeVars() {
-        return new Builder()
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithSomeVars(
+            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
+        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}" +
@@ -42,8 +48,11 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
                 .withExpectedResponseMatchForSuccess("1970-01-01T00:00:00Z");
     }
 
-    static HttpTargetTestParams.Builder httpTargetTestParamsWithNoVars() {
-        return new Builder()
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithNoVars(
+            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
+        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?constant=aConstant"
                 )
@@ -67,43 +76,43 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
         private String expectedBody;
         private String expectedResponseMatchForSuccess;
 
-        public Builder withHttpTargetFactory(HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withHttpTargetFactory(HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory) {
             this.httpTargetFactory = httpTargetFactory;
             return this;
         }
 
-        public Builder withHttpTargetURIAsString(String httpTargetURIAsString) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withHttpTargetURIAsString(String httpTargetURIAsString) {
             this.httpTargetURIAsString = httpTargetURIAsString;
             return this;
         }
 
-        public Builder withBody(String body) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withBody(String body) {
             this.body = body;
             return this;
         }
 
-        public Builder withResponseMatchForSuccess(String responseMatchForSuccess) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withResponseMatchForSuccess(String responseMatchForSuccess) {
             this.responseMatchForSuccess = responseMatchForSuccess;
             return this;
         }
 
-        public Builder withExpectedURI(String expectedURI) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withExpectedURI(String expectedURI) {
             this.expectedURI = expectedURI;
             return this;
         }
 
-        public Builder withExpectedBody(String expectedBody) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withExpectedBody(String expectedBody) {
             this.expectedBody = expectedBody;
             return this;
         }
 
-        public Builder withExpectedResponseMatchForSuccess(String expectedResponseMatchForSuccess) {
+        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withExpectedResponseMatchForSuccess(String expectedResponseMatchForSuccess) {
             this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
             return this;
         }
 
-        HttpTargetTestParams build() {
-            return new HttpTargetTestParams(
+        HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> build() {
+            return new HttpTargetTestParams<>(
                     httpTargetFactory, httpTargetURIAsString,
                     body,
                     responseMatchForSuccess,

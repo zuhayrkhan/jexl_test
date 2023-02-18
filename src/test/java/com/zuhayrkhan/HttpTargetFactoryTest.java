@@ -26,33 +26,41 @@ class HttpTargetFactoryTest {
 
     private static final Clock CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    public static Stream<HttpTargetTestParams> createURIStringsAndExpectedMapStrategy() {
+    public static Stream<HttpTargetTestParams<SimpleMapContext, MapContextHolder, MapContextBuilder>>
+    createURIStringsAndExpectedMapStrategy() {
 
         HttpTargetFactory<SimpleMapContext, MapContextHolder, MapContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(
                         new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()));
 
         return Stream.of(
-                httpTargetTestParamsWithSomeConstAmongVars()
+                httpTargetTestParamsWithSomeConstAmongVars(
+                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
-                httpTargetTestParamsWithSomeVars()
+                httpTargetTestParamsWithSomeVars(
+                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
-                httpTargetTestParamsWithNoVars()
+                httpTargetTestParamsWithNoVars(
+                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build()
         );
     }
 
-    public static Stream<HttpTargetTestParams> createURIStringsAndExpectedJexlStrategy() {
+    public static Stream<HttpTargetTestParams<JexlContext, JexlContextHolder, JexlContextBuilder>>
+    createURIStringsAndExpectedJexlStrategy() {
 
         HttpTargetFactory<JexlContext, JexlContextHolder, JexlContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()));
 
         return Stream.of(
-                httpTargetTestParamsWithSomeConstAmongVars()
+                httpTargetTestParamsWithSomeConstAmongVars(
+                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
-                httpTargetTestParamsWithSomeVars()
+                httpTargetTestParamsWithSomeVars(
+                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
-                httpTargetTestParamsWithNoVars()
+                httpTargetTestParamsWithNoVars(
+                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build()
         );
     }
@@ -60,7 +68,7 @@ class HttpTargetFactoryTest {
     @ParameterizedTest
     @MethodSource({"createURIStringsAndExpectedMapStrategy",
             "createURIStringsAndExpectedJexlStrategy"})
-    void can_create_URI_from_URI_with_date_vars_and_have_them_converted(HttpTargetTestParams httpTargetTestParams) {
+    void can_create_URI_from_URI_with_date_vars_and_have_them_converted(HttpTargetTestParams<?, ?, ?> httpTargetTestParams) {
 
         HttpTarget httpTarget = httpTargetTestParams.getHttpTargetFactory()
                 .createHttpTarget(
