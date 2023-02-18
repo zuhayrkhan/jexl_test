@@ -8,4 +8,8 @@ public interface ConverterStrategy<CONTEXT_HOLDER> {
 
     String doConvert(CONTEXT_HOLDER contextHolder, String input);
 
+    default String getName() {
+        return getClass().getSimpleName();
+    }
+
 }

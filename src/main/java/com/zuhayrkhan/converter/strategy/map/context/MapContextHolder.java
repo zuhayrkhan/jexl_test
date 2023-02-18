@@ -4,7 +4,7 @@ import com.zuhayrkhan.converter.context.ContextHolder;
 
 import java.util.Map;
 
-public class MapContextHolder<CONTEXT> implements ContextHolder<CONTEXT> {
+public class MapContextHolder implements ContextHolder<Map<String, Object>> {
 
     private final Map<String, Object> content;
 
@@ -23,7 +23,7 @@ public class MapContextHolder<CONTEXT> implements ContextHolder<CONTEXT> {
     }
 
     @Override
-    public CONTEXT unWrapContext() {
-        return (CONTEXT) content;
+    public Map<String, Object> unWrapContext() {
+        return content;
     }
 }

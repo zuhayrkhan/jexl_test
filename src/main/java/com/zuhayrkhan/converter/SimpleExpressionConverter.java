@@ -30,4 +30,10 @@ public class SimpleExpressionConverter<CONTEXT> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "SimpleExpressionConverter{" +
+                "converterStrategy.name=" + converterStrategy.getName() +
+                '}';
+    }
 }

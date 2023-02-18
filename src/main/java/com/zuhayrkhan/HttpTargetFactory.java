@@ -4,8 +4,6 @@ import com.zuhayrkhan.converter.SimpleExpressionConverter;
 import com.zuhayrkhan.model.HttpTarget;
 
 import java.net.URI;
-import java.util.Optional;
-import java.util.regex.Pattern;
 
 public class HttpTargetFactory<CONTEXT> {
 
@@ -24,10 +22,10 @@ public class HttpTargetFactory<CONTEXT> {
         );
     }
 
-    private Pattern createPattern(String responseMatchForSuccess) {
-        return Optional.ofNullable(responseMatchForSuccess)
-                .map(s -> Pattern.compile(simpleExpressionConverter.convert(responseMatchForSuccess)))
-                .orElse(null);
+    @Override
+    public String toString() {
+        return "HttpTargetFactory{" +
+                "simpleExpressionConverter=" + simpleExpressionConverter +
+                '}';
     }
-
 }

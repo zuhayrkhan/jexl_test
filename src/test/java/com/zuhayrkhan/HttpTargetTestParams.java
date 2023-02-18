@@ -54,7 +54,7 @@ class HttpTargetTestParams {
 
     static class Builder {
 
-        private HttpTargetFactory httpTargetFactory;
+        private HttpTargetFactory<?> httpTargetFactory;
         private String httpTargetURIAsString;
         private String body;
         private String responseMatchForSuccess;
@@ -62,7 +62,7 @@ class HttpTargetTestParams {
         private String expectedBody;
         private String expectedResponseMatchForSuccess;
 
-        public Builder withHttpTargetFactory(HttpTargetFactory httpTargetFactory) {
+        public Builder withHttpTargetFactory(HttpTargetFactory<?> httpTargetFactory) {
             this.httpTargetFactory = httpTargetFactory;
             return this;
         }
@@ -110,7 +110,7 @@ class HttpTargetTestParams {
 
     }
 
-    private final HttpTargetFactory httpTargetFactory;
+    private final HttpTargetFactory<?> httpTargetFactory;
     private final String httpTargetURIAsString;
     private final String body;
     private final String responseMatchForSuccess;
@@ -118,7 +118,7 @@ class HttpTargetTestParams {
     private final String expectedBody;
     private final String expectedResponseMatchForSuccess;
 
-    HttpTargetTestParams(HttpTargetFactory httpTargetFactory,
+    HttpTargetTestParams(HttpTargetFactory<?> httpTargetFactory,
                          String httpTargetURIAsString,
                          String body,
                          String responseMatchForSuccess,
@@ -134,7 +134,7 @@ class HttpTargetTestParams {
         this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
     }
 
-    public HttpTargetFactory getHttpTargetFactory() {
+    public HttpTargetFactory<?> getHttpTargetFactory() {
         return httpTargetFactory;
     }
 
@@ -164,8 +164,8 @@ class HttpTargetTestParams {
 
     @Override
     public String toString() {
-        return "HTTP{" +
-                "httpTargetFactory='" + httpTargetFactory + '\'' +
+        return "{" +
+                httpTargetFactory.toString() + '\'' +
                 "httpTargetURIAsString='" + httpTargetURIAsString + '\'' +
                 ", body='" + body + '\'' +
                 ", responseMatchForSuccess='" + responseMatchForSuccess + '\'' +

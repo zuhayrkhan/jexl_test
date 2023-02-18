@@ -89,8 +89,8 @@ class SimpleExpressionConverterParams {
 
     @Override
     public String toString() {
-        return "SECP{" +
-                "simpleExpressionConverter=" + simpleExpressionConverter +
+        return "{" +
+                simpleExpressionConverter.toString() +
                 ", httpTargetURIAsString='" + httpTargetURIAsString + '\'' +
                 ", expectedURI='" + expectedURI + '\'' +
                 '}';

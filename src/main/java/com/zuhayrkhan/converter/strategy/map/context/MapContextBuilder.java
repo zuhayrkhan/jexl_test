@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class MapContextBuilder implements ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>> {
 
-    private final ContextHolder<Map<String, Object>> contents = new MapContextHolder<>(new ConcurrentHashMap<>());
+    private final MapContextHolder contents = new MapContextHolder(new ConcurrentHashMap<>());
 
     @Override
     public ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>> populateFrom(

@@ -22,6 +22,11 @@ public class MapConverterStrategy implements ConverterStrategy<ContextHolder<Map
     }
 
     @Override
+    public String getName() {
+        return MapConverterStrategy.class.getSimpleName();
+    }
+
+    @Override
     public ContextHolder<Map<String, Object>> createContextHolder() {
         return new MapContextBuilder()
                 .populateFrom(contextHolder -> contextHolder.addIntoContext(CLOCK_IN_CONTEXT, clock))

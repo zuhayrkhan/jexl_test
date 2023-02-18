@@ -26,6 +26,11 @@ public class JexlConverterStrategy implements ConverterStrategy<ContextHolder<Je
         this.clock = clock;
     }
 
+//    @Override
+//    public String getName() {
+//        return JexlConverterStrategy.class.getSimpleName();
+//    }
+
     @Override
     public ContextHolder<JexlContext> createContextHolder() {
         return new JexlContextBuilder()
