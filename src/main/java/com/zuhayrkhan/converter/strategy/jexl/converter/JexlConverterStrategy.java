@@ -1,6 +1,5 @@
 package com.zuhayrkhan.converter.strategy.jexl.converter;
 
-import com.zuhayrkhan.converter.context.CommonDatesPopulator;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
@@ -31,14 +30,6 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext, Jex
     @Override
     public Supplier<JexlContextBuilder> getContextBuilderFactory() {
         return JexlContextBuilder::new;
-    }
-
-    @Override
-    public JexlContextHolder createContextHolder() {
-        return new JexlContextBuilder()
-                .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
-                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
-                .build();
     }
 
     @Override

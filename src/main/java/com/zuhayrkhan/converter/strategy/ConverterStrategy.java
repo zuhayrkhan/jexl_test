@@ -12,13 +12,10 @@ public interface ConverterStrategy<CONTEXT, CONTEXT_HOLDER extends
 
     String CLOCK_IN_CONTEXT = "clock";
 
-    CONTEXT_HOLDER createContextHolder();
-
     Supplier<CONTEXT_BUILDER> getContextBuilderFactory();
 
-    default CONTEXT_HOLDER newCreateContextHolder(Clock clock,
-                                                  Supplier<CONTEXT_BUILDER> contextBuilderFactory) {
-        return contextBuilderFactory.get()
+    default CONTEXT_HOLDER newCreateContextHolder(Clock clock) {
+        return getContextBuilderFactory().get()
                 .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
                 .build();

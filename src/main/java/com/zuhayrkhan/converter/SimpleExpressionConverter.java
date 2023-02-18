@@ -30,9 +30,9 @@ public class SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER extends ContextHo
             return null;
         }
 
-//        converterStrategy.newCreateContextHolder(clock, converterStrategy.getContextBuilderFactory());
+        CONTEXT_HOLDER contextHolder = converterStrategy.newCreateContextHolder(clock);
 
-        String result = converterStrategy.doConvert(converterStrategy.createContextHolder(), httpTargetURIAsString);
+        String result = converterStrategy.doConvert(contextHolder, httpTargetURIAsString);
 
         LOGGER.info("result={}", result);
 

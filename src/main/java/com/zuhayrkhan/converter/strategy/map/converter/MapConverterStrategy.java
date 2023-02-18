@@ -1,6 +1,5 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
-import com.zuhayrkhan.converter.context.CommonDatesPopulator;
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
@@ -32,14 +31,6 @@ public class MapConverterStrategy implements ConverterStrategy<Map<String, Objec
                 return new MapContextBuilder();
             }
         };
-    }
-
-    @Override
-    public ContextHolder<Map<String, Object>> createContextHolder() {
-        return new MapContextBuilder()
-                .populateFrom(contextHolder -> contextHolder.addIntoContext(CLOCK_IN_CONTEXT, clock))
-                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
-                .build();
     }
 
     @Override
