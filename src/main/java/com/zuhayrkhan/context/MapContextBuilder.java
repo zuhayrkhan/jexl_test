@@ -1,21 +1,20 @@
 package com.zuhayrkhan.context;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-public class MapContextBuilder implements ContextBuilder<ContextHolder<Map<String, Object>>> {
+public class MapContextBuilder implements ContextBuilder<MapContextHolder> {
 
-    private final ContextHolder<Map<String, Object>> contents = new MapContextHolder(new ConcurrentHashMap<>());
+    private final MapContextHolder contents = new MapContextHolder(new ConcurrentHashMap<>());
 
     @Override
-    public ContextBuilder<ContextHolder<Map<String, Object>>> populateFrom(Consumer<ContextHolder<Map<String, Object>>> contextConsumer) {
+    public ContextBuilder<MapContextHolder> populateFrom(Consumer<MapContextHolder> contextConsumer) {
         contextConsumer.accept(contents);
         return this;
     }
 
     @Override
-    public ContextHolder<Map<String, Object>> build() {
+    public MapContextHolder build() {
         return contents;
     }
 }

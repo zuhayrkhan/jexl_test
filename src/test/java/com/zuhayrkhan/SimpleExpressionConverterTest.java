@@ -1,8 +1,8 @@
 package com.zuhayrkhan;
 
-import com.zuhayrkhan.context.JexlContextHolder;
+import com.zuhayrkhan.context.ContextHolder;
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.strategy.JexlConverterStrategy;
+import com.zuhayrkhan.converter.strategy.SimpleConverterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +18,7 @@ class SimpleExpressionConverterTest {
 
     private final Clock clock = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    private SimpleExpressionConverter<JexlContextHolder> simpleExpressionConverter;
+    private SimpleExpressionConverter<ContextHolder<?>> simpleExpressionConverter;
 
     static class SimpleExpressionConverterParams {
         private final String httpTargetURIAsString;
@@ -67,7 +67,8 @@ class SimpleExpressionConverterTest {
 
     @BeforeEach
     void setUp() {
-        simpleExpressionConverter = new SimpleExpressionConverter<>(new JexlConverterStrategy(clock));
+        simpleExpressionConverter = new SimpleExpressionConverter<>(new SimpleConverterStrategy(clock));
+//        simpleExpressionConverter = new SimpleExpressionConverter<>(new JexlConverterStrategy(clock));
     }
 
     @ParameterizedTest
