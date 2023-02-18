@@ -2,7 +2,7 @@ package com.zuhayrkhan;
 
 import com.zuhayrkhan.context.ContextHolder;
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.strategy.SimpleConverterStrategy;
+import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -67,7 +67,7 @@ class SimpleExpressionConverterTest {
 
     @BeforeEach
     void setUp() {
-        simpleExpressionConverter = new SimpleExpressionConverter<>(new SimpleConverterStrategy(clock));
+        simpleExpressionConverter = new SimpleExpressionConverter<>(new MapConverterStrategy(clock));
 //        simpleExpressionConverter = new SimpleExpressionConverter<>(new JexlConverterStrategy(clock));
     }
 

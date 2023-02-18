@@ -1,7 +1,7 @@
 package com.zuhayrkhan.converter;
 
 import com.zuhayrkhan.context.ContextHolder;
-import com.zuhayrkhan.converter.strategy.ConverterStrategy;
+import com.zuhayrkhan.context.ConverterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

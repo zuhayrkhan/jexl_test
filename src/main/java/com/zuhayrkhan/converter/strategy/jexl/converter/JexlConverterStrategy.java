@@ -1,8 +1,9 @@
-package com.zuhayrkhan.converter.strategy;
+package com.zuhayrkhan.converter.strategy.jexl.converter;
 
 import com.zuhayrkhan.context.CommonDatesPopulator;
-import com.zuhayrkhan.context.JexlContextBuilder;
-import com.zuhayrkhan.context.JexlContextHolder;
+import com.zuhayrkhan.context.ConverterStrategy;
+import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
+import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;

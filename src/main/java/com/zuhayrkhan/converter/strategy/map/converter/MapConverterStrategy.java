@@ -1,21 +1,22 @@
-package com.zuhayrkhan.converter.strategy;
+package com.zuhayrkhan.converter.strategy.map.converter;
 
 import com.zuhayrkhan.context.CommonDatesPopulator;
 import com.zuhayrkhan.context.ContextHolder;
-import com.zuhayrkhan.context.MapContextBuilder;
+import com.zuhayrkhan.context.ConverterStrategy;
+import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
 import java.util.Arrays;
 
-public class SimpleConverterStrategy implements ConverterStrategy<ContextHolder<?>> {
+public class MapConverterStrategy implements ConverterStrategy<ContextHolder<?>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleConverterStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);
 
     private final Clock clock;
 
-    public SimpleConverterStrategy(Clock clock) {
+    public MapConverterStrategy(Clock clock) {
         this.clock = clock;
     }
 

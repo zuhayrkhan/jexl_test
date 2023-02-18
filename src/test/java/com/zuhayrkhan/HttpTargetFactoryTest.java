@@ -1,9 +1,9 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.context.ContextHolder;
+import com.zuhayrkhan.context.ConverterStrategy;
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.strategy.ConverterStrategy;
-import com.zuhayrkhan.converter.strategy.SimpleConverterStrategy;
+import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +25,7 @@ class HttpTargetFactoryTest {
     @BeforeEach
     void setUp() {
 //        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new JexlConverterStrategy(clock);
-        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new SimpleConverterStrategy(clock);
+        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new MapConverterStrategy(clock);
         httpTargetFactory = new HttpTargetFactory(
                 new SimpleExpressionConverter<>(converterStrategy));
     }
