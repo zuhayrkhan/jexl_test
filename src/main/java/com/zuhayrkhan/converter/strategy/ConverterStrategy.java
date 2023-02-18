@@ -1,10 +1,28 @@
 package com.zuhayrkhan.converter.strategy;
 
-public interface ConverterStrategy<CONTEXT_HOLDER> {
+import com.zuhayrkhan.converter.context.CommonDatesPopulator;
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
+
+import java.time.Clock;
+import java.util.function.Supplier;
+
+public interface ConverterStrategy<CONTEXT, CONTEXT_HOLDER extends
+        ContextHolder<CONTEXT>, CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
     String CLOCK_IN_CONTEXT = "clock";
 
     CONTEXT_HOLDER createContextHolder();
+
+    Supplier<CONTEXT_BUILDER> getContextBuilderFactory();
+
+    default CONTEXT_HOLDER newCreateContextHolder(Clock clock,
+                                                  Supplier<CONTEXT_BUILDER> contextBuilderFactory) {
+        return contextBuilderFactory.get()
+                .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
+                .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
+                .build();
+    }
 
     String doConvert(CONTEXT_HOLDER contextHolder, String input);
 

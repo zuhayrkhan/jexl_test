@@ -1,17 +1,24 @@
 package com.zuhayrkhan.converter;
 
+import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SimpleExpressionConverter<CONTEXT> {
+import java.time.Clock;
+
+public class SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleExpressionConverter.class);
 
-    private final ConverterStrategy<ContextHolder<CONTEXT>> converterStrategy;
+    private final Clock clock;
 
-    public SimpleExpressionConverter(ConverterStrategy<ContextHolder<CONTEXT>> converterStrategy) {
+    private final ConverterStrategy<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> converterStrategy;
+
+    public SimpleExpressionConverter(Clock clock, ConverterStrategy<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> converterStrategy) {
+        this.clock = clock;
         this.converterStrategy = converterStrategy;
     }
 
@@ -22,6 +29,8 @@ public class SimpleExpressionConverter<CONTEXT> {
         if (httpTargetURIAsString == null) {
             return null;
         }
+
+//        converterStrategy.newCreateContextHolder(clock, converterStrategy.getContextBuilderFactory());
 
         String result = converterStrategy.doConvert(converterStrategy.createContextHolder(), httpTargetURIAsString);
 

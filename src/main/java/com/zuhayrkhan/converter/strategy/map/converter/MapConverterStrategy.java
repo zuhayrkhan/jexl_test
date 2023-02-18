@@ -1,6 +1,7 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
 import com.zuhayrkhan.converter.context.CommonDatesPopulator;
+import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
@@ -10,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import java.time.Clock;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Supplier;
 
-public class MapConverterStrategy implements ConverterStrategy<ContextHolder<Map<String, Object>>> {
+public class MapConverterStrategy implements ConverterStrategy<Map<String, Object>,
+        ContextHolder<Map<String, Object>>, ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);
 
@@ -19,6 +22,16 @@ public class MapConverterStrategy implements ConverterStrategy<ContextHolder<Map
 
     public MapConverterStrategy(Clock clock) {
         this.clock = clock;
+    }
+
+    @Override
+    public Supplier<ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> getContextBuilderFactory() {
+        return new Supplier<ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>>() {
+            @Override
+            public ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>> get() {
+                return new MapContextBuilder();
+            }
+        };
     }
 
     @Override

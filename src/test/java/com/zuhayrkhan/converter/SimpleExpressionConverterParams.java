@@ -1,6 +1,10 @@
 package com.zuhayrkhan.converter;
 
-class SimpleExpressionConverterParams {
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
+
+class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
     static Builder simpleExpressionConverterParamsWithAllVars() {
         return new Builder()
@@ -32,13 +36,15 @@ class SimpleExpressionConverterParams {
                         "?constant=aConstant");
     }
 
-    static class Builder {
+    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
-        private SimpleExpressionConverter<?> simpleExpressionConverter;
+        private SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter;
         private String httpTargetURIAsString;
         private String expectedURI;
 
-        public Builder withSimpleExpressionConverter(SimpleExpressionConverter<?> simpleExpressionConverter) {
+        public Builder withSimpleExpressionConverter(
+                SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter) {
             this.simpleExpressionConverter = simpleExpressionConverter;
             return this;
         }
@@ -63,11 +69,11 @@ class SimpleExpressionConverterParams {
 
     }
 
-    private final SimpleExpressionConverter<?> simpleExpressionConverter;
+    private final SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter;
     private final String httpTargetURIAsString;
     private final String expectedURI;
 
-    SimpleExpressionConverterParams(SimpleExpressionConverter<?> simpleExpressionConverter,
+    SimpleExpressionConverterParams(SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter,
                                     String httpTargetURIAsString,
                                     String expectedURI) {
         this.simpleExpressionConverter = simpleExpressionConverter;
@@ -75,7 +81,7 @@ class SimpleExpressionConverterParams {
         this.expectedURI = expectedURI;
     }
 
-    public SimpleExpressionConverter<?> getSimpleExpressionConverter() {
+    public SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> getSimpleExpressionConverter() {
         return simpleExpressionConverter;
     }
 

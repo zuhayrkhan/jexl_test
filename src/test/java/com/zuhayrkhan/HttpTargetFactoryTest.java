@@ -1,6 +1,10 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
+import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
@@ -24,8 +28,9 @@ class HttpTargetFactoryTest {
 
     public static Stream<HttpTargetTestParams> createURIStringsAndExpectedMapStrategy() {
 
-        HttpTargetFactory<Map<String, Object>> httpTargetFactory = new HttpTargetFactory<>(
-                new SimpleExpressionConverter<>(new MapConverterStrategy(CLOCK)));
+        HttpTargetFactory<Map<String, Object>, ContextHolder<Map<String, Object>>,
+                ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> httpTargetFactory = new HttpTargetFactory<>(
+                new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy(CLOCK)));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars()
@@ -39,8 +44,8 @@ class HttpTargetFactoryTest {
 
     public static Stream<HttpTargetTestParams> createURIStringsAndExpectedJexlStrategy() {
 
-        HttpTargetFactory<JexlContext> httpTargetFactory = new HttpTargetFactory<>(
-                new SimpleExpressionConverter<>(new JexlConverterStrategy(CLOCK)));
+        HttpTargetFactory<JexlContext, JexlContextHolder, JexlContextBuilder> httpTargetFactory =
+                new HttpTargetFactory<>(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy(CLOCK)));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars()

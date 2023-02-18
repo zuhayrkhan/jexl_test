@@ -1,6 +1,10 @@
 package com.zuhayrkhan;
 
-class HttpTargetTestParams {
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
+
+class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
     static HttpTargetTestParams.Builder httpTargetTestParamsWithSomeConstAmongVars() {
         return new Builder()
@@ -52,9 +56,10 @@ class HttpTargetTestParams {
                 .withExpectedResponseMatchForSuccess(null);
     }
 
-    static class Builder {
+    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
+            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
 
-        private HttpTargetFactory<?> httpTargetFactory;
+        private HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory;
         private String httpTargetURIAsString;
         private String body;
         private String responseMatchForSuccess;
@@ -62,7 +67,7 @@ class HttpTargetTestParams {
         private String expectedBody;
         private String expectedResponseMatchForSuccess;
 
-        public Builder withHttpTargetFactory(HttpTargetFactory<?> httpTargetFactory) {
+        public Builder withHttpTargetFactory(HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory) {
             this.httpTargetFactory = httpTargetFactory;
             return this;
         }
@@ -110,7 +115,7 @@ class HttpTargetTestParams {
 
     }
 
-    private final HttpTargetFactory<?> httpTargetFactory;
+    private final HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory;
     private final String httpTargetURIAsString;
     private final String body;
     private final String responseMatchForSuccess;
@@ -118,7 +123,7 @@ class HttpTargetTestParams {
     private final String expectedBody;
     private final String expectedResponseMatchForSuccess;
 
-    HttpTargetTestParams(HttpTargetFactory<?> httpTargetFactory,
+    HttpTargetTestParams(HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory,
                          String httpTargetURIAsString,
                          String body,
                          String responseMatchForSuccess,
@@ -134,7 +139,7 @@ class HttpTargetTestParams {
         this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
     }
 
-    public HttpTargetFactory<?> getHttpTargetFactory() {
+    public HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> getHttpTargetFactory() {
         return httpTargetFactory;
     }
 
