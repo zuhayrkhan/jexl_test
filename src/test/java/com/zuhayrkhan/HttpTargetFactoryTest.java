@@ -1,11 +1,10 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.context.ContextHolder;
-import com.zuhayrkhan.converter.strategy.ConverterStrategy;
+import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
-import org.junit.jupiter.api.BeforeEach;
+import org.apache.commons.jexl3.JexlContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -16,109 +15,60 @@ import java.time.ZoneId;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static com.zuhayrkhan.HttpTargetTestParams.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpTargetFactoryTest {
 
-    private final Clock clock = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
-    private HttpTargetFactory httpTargetFactory;
+    private static final Clock CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    @BeforeEach
-    void setUp() {
-//        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new JexlConverterStrategy(clock);
-        ConverterStrategy<ContextHolder<Map<String, Object>>> converterStrategy = new MapConverterStrategy(clock);
-        httpTargetFactory = new HttpTargetFactory(
-                new SimpleExpressionConverter<>(converterStrategy));
-    }
+    public static Stream<HttpTargetTestParams> createURIStringsAndExpectedMapStrategy() {
 
-    static class HttpTargetTestParams {
-        private final String httpTargetURIAsString;
-        private final String body;
-        private final String responseMatchForSuccess;
-        private final String expectedURI;
-        private final String expectedBody;
-        private final String expectedResponseMatchForSuccess;
+        HttpTargetFactory<Map<String, Object>> httpTargetFactory = new HttpTargetFactory<>(
+                new SimpleExpressionConverter<>(new MapConverterStrategy(CLOCK)));
 
-        HttpTargetTestParams(String httpTargetURIAsString,
-                             String body,
-                             String responseMatchForSuccess,
-                             String expectedURI,
-                             String expectedBody,
-                             String expectedResponseMatchForSuccess) {
-            this.httpTargetURIAsString = httpTargetURIAsString;
-            this.body = body;
-            this.responseMatchForSuccess = responseMatchForSuccess;
-            this.expectedURI = expectedURI;
-            this.expectedBody = expectedBody;
-            this.expectedResponseMatchForSuccess = expectedResponseMatchForSuccess;
-        }
-
-        @Override
-        public String toString() {
-            return "HttpTargetTestParams{" +
-                    "httpTargetURIAsString='" + httpTargetURIAsString + '\'' +
-                    ", body='" + body + '\'' +
-                    ", responseMatchForSuccess='" + responseMatchForSuccess + '\'' +
-                    ", expectedURI='" + expectedURI + '\'' +
-                    ", expectedBody='" + expectedBody + '\'' +
-                    ", expectedResponseMatchForSuccess='" + expectedResponseMatchForSuccess + '\'' +
-                    '}';
-        }
-
-    }
-
-    public static Stream<HttpTargetTestParams> createURIStringsAndExpected() {
         return Stream.of(
-                new HttpTargetTestParams("http://localhost:8080/reports/" +
-                        "?fromDate=${yesterday}" +
-                        "&anotherParam=anotherValue" +
-                        "&untilDate=${today}"
-                        , "${tomorrow}"
-                        , "${today}"
-                        , "http://localhost:8080/reports/" +
-                        "?fromDate=1969-12-31T00:00:00Z" +
-                        "&anotherParam=anotherValue" +
-                        "&untilDate=1970-01-01T00:00:00Z"
-                        , "1970-01-02T00:00:00Z"
-                        , "1970-01-01T00:00:00Z"),
-                new HttpTargetTestParams("http://localhost:8080/reports/" +
-                        "?fromDate=${yesterday}" +
-                        "&untilDate=${today}" +
-                        "&constant=aConstant"
-                        , "${tomorrow}"
-                        , "${today}"
-                        , "http://localhost:8080/reports/" +
-                        "?fromDate=1969-12-31T00:00:00Z" +
-                        "&untilDate=1970-01-01T00:00:00Z" +
-                        "&constant=aConstant"
-                        , "1970-01-02T00:00:00Z"
-                        , "1970-01-01T00:00:00Z"),
-                new HttpTargetTestParams("http://localhost:8080/reports/" +
-                        "?constant=aConstant"
-                        , "blah"
-                        , null
-                        , "http://localhost:8080/reports/" +
-                        "?constant=aConstant"
-                        , "blah"
-                        , null)
+                httpTargetTestParamsWithSomeConstAmongVars()
+                        .withHttpTargetFactory(httpTargetFactory).build(),
+                httpTargetTestParamsWithSomeVars()
+                        .withHttpTargetFactory(httpTargetFactory).build(),
+                httpTargetTestParamsWithNoVars()
+                        .withHttpTargetFactory(httpTargetFactory).build()
+        );
+    }
+
+    public static Stream<HttpTargetTestParams> createURIStringsAndExpectedJexlStrategy() {
+
+        HttpTargetFactory<JexlContext> httpTargetFactory = new HttpTargetFactory<>(
+                new SimpleExpressionConverter<>(new JexlConverterStrategy(CLOCK)));
+
+        return Stream.of(
+                httpTargetTestParamsWithSomeConstAmongVars()
+                        .withHttpTargetFactory(httpTargetFactory).build(),
+                httpTargetTestParamsWithSomeVars()
+                        .withHttpTargetFactory(httpTargetFactory).build(),
+                httpTargetTestParamsWithNoVars()
+                        .withHttpTargetFactory(httpTargetFactory).build()
         );
     }
 
     @ParameterizedTest
-    @MethodSource("createURIStringsAndExpected")
+    @MethodSource({"createURIStringsAndExpectedMapStrategy",
+            "createURIStringsAndExpectedJexlStrategy"})
     void can_create_URI_from_URI_with_date_vars_and_have_them_converted(HttpTargetTestParams httpTargetTestParams) {
 
-        HttpTarget httpTarget = httpTargetFactory.createHttpTarget(
-                httpTargetTestParams.httpTargetURIAsString,
-                httpTargetTestParams.body,
-                httpTargetTestParams.responseMatchForSuccess);
+        HttpTarget httpTarget = httpTargetTestParams.getHttpTargetFactory()
+                .createHttpTarget(
+                        httpTargetTestParams.getHttpTargetURIAsString(),
+                        httpTargetTestParams.getBody(),
+                        httpTargetTestParams.getResponseMatchForSuccess());
 
         assertThat(httpTarget)
                 .isNotNull()
                 .isEqualTo(new HttpTarget(
-                        URI.create(httpTargetTestParams.expectedURI),
-                        httpTargetTestParams.expectedBody,
-                        httpTargetTestParams.expectedResponseMatchForSuccess)
+                        URI.create(httpTargetTestParams.getExpectedURI()),
+                        httpTargetTestParams.getExpectedBody(),
+                        httpTargetTestParams.getExpectedResponseMatchForSuccess())
                 );
 
     }

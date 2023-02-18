@@ -7,11 +7,11 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class HttpTargetFactory {
+public class HttpTargetFactory<CONTEXT> {
 
-    private final SimpleExpressionConverter simpleExpressionConverter;
+    private final SimpleExpressionConverter<CONTEXT> simpleExpressionConverter;
 
-    public HttpTargetFactory(SimpleExpressionConverter simpleExpressionConverter) {
+    public HttpTargetFactory(SimpleExpressionConverter<CONTEXT> simpleExpressionConverter) {
         this.simpleExpressionConverter = simpleExpressionConverter;
     }
 
