@@ -6,6 +6,7 @@ import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
+import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
 import org.apache.commons.jexl3.JexlContext;
@@ -16,7 +17,6 @@ import java.net.URI;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.zuhayrkhan.HttpTargetTestParams.*;
@@ -28,7 +28,7 @@ class HttpTargetFactoryTest {
 
     public static Stream<HttpTargetTestParams> createURIStringsAndExpectedMapStrategy() {
 
-        HttpTargetFactory<Map<String, Object>, MapContextHolder, MapContextBuilder> httpTargetFactory =
+        HttpTargetFactory<SimpleMapContext, MapContextHolder, MapContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(
                         new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()));
 

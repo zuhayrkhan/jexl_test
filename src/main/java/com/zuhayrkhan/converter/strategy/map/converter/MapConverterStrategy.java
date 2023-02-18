@@ -3,14 +3,14 @@ package com.zuhayrkhan.converter.strategy.map.converter;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
+import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.function.Supplier;
 
-public class MapConverterStrategy implements ConverterStrategy<Map<String, Object>,
+public class MapConverterStrategy implements ConverterStrategy<SimpleMapContext,
         MapContextHolder, MapContextBuilder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);

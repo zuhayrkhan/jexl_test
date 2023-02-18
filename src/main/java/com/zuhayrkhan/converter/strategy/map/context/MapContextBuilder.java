@@ -2,16 +2,14 @@ package com.zuhayrkhan.converter.strategy.map.context;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-public class MapContextBuilder implements ContextBuilder<Map<String, Object>, MapContextHolder> {
+public class MapContextBuilder implements ContextBuilder<SimpleMapContext, MapContextHolder> {
 
-    private final MapContextHolder contents = new MapContextHolder(new ConcurrentHashMap<>());
+    private final MapContextHolder contents = new MapContextHolder(new SimpleMapContextImpl());
 
     @Override
-    public ContextBuilder<Map<String, Object>, MapContextHolder> populateFrom(
+    public ContextBuilder<SimpleMapContext, MapContextHolder> populateFrom(
             Consumer<MapContextHolder> contextConsumer) {
         contextConsumer.accept(contents);
         return this;

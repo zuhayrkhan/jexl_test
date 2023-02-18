@@ -2,13 +2,11 @@ package com.zuhayrkhan.converter.strategy.map.context;
 
 import com.zuhayrkhan.converter.context.ContextHolder;
 
-import java.util.Map;
+public class MapContextHolder implements ContextHolder<SimpleMapContext> {
 
-public class MapContextHolder implements ContextHolder<Map<String, Object>> {
+    private final SimpleMapContext content;
 
-    private final Map<String, Object> content;
-
-    public MapContextHolder(Map<String, Object> content) {
+    public MapContextHolder(SimpleMapContext content) {
         this.content = content;
     }
 
@@ -23,7 +21,7 @@ public class MapContextHolder implements ContextHolder<Map<String, Object>> {
     }
 
     @Override
-    public Map<String, Object> unWrapContext() {
+    public SimpleMapContext unWrapContext() {
         return content;
     }
 }
