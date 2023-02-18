@@ -1,6 +1,6 @@
 package com.zuhayrkhan.converter.strategy.jexl.context;
 
-import com.zuhayrkhan.context.ContextHolder;
+import com.zuhayrkhan.converter.context.ContextHolder;
 import org.apache.commons.jexl3.JexlContext;
 
 public class JexlContextHolder implements ContextHolder<JexlContext> {

@@ -1,10 +1,11 @@
 package com.zuhayrkhan.converter.strategy.jexl.converter;
 
-import com.zuhayrkhan.context.CommonDatesPopulator;
-import com.zuhayrkhan.context.ConverterStrategy;
+import com.zuhayrkhan.converter.context.CommonDatesPopulator;
+import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Clock;
 import java.util.Arrays;
 
-public class JexlConverterStrategy implements ConverterStrategy<JexlContextHolder> {
+public class JexlConverterStrategy implements ConverterStrategy<ContextHolder<JexlContext>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JexlConverterStrategy.class);
 
@@ -26,7 +27,7 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContextHolde
     }
 
     @Override
-    public JexlContextHolder createContextHolder() {
+    public ContextHolder<JexlContext> createContextHolder() {
         return new JexlContextBuilder()
                 .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
@@ -34,7 +35,7 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContextHolde
     }
 
     @Override
-    public String doConvert(JexlContextHolder jexlContextHolder, String input) {
+    public String doConvert(ContextHolder<JexlContext> jexlContextHolder, String input) {
 
         String httpTargetURIAsJexlExpression = createJexlExpression(input);
 

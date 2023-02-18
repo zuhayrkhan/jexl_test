@@ -1,4 +1,4 @@
-package com.zuhayrkhan.context;
+package com.zuhayrkhan.converter.context;
 
 public interface ContextHolder<CONTEXT> {
 

@@ -1,17 +1,17 @@
 package com.zuhayrkhan.converter;
 
-import com.zuhayrkhan.context.ContextHolder;
-import com.zuhayrkhan.context.ConverterStrategy;
+import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SimpleExpressionConverter<CONTEXT_HOLDER extends ContextHolder<?>> {
+public class SimpleExpressionConverter<CONTEXT> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleExpressionConverter.class);
 
-    private final ConverterStrategy<CONTEXT_HOLDER> converterStrategy;
+    private final ConverterStrategy<ContextHolder<CONTEXT>> converterStrategy;
 
-    public SimpleExpressionConverter(ConverterStrategy<CONTEXT_HOLDER> converterStrategy) {
+    public SimpleExpressionConverter(ConverterStrategy<ContextHolder<CONTEXT>> converterStrategy) {
         this.converterStrategy = converterStrategy;
     }
 

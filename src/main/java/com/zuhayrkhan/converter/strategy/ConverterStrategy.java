@@ -1,4 +1,4 @@
-package com.zuhayrkhan.context;
+package com.zuhayrkhan.converter.strategy;
 
 public interface ConverterStrategy<CONTEXT_HOLDER> {
 

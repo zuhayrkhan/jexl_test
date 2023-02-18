@@ -1,16 +1,17 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
-import com.zuhayrkhan.context.CommonDatesPopulator;
-import com.zuhayrkhan.context.ContextHolder;
-import com.zuhayrkhan.context.ConverterStrategy;
+import com.zuhayrkhan.converter.context.CommonDatesPopulator;
+import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
 import java.util.Arrays;
+import java.util.Map;
 
-public class MapConverterStrategy implements ConverterStrategy<ContextHolder<?>> {
+public class MapConverterStrategy implements ConverterStrategy<ContextHolder<Map<String, Object>>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);
 
@@ -21,7 +22,7 @@ public class MapConverterStrategy implements ConverterStrategy<ContextHolder<?>>
     }
 
     @Override
-    public ContextHolder<?> createContextHolder() {
+    public ContextHolder<Map<String, Object>> createContextHolder() {
         return new MapContextBuilder()
                 .populateFrom(contextHolder -> contextHolder.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
@@ -29,7 +30,7 @@ public class MapConverterStrategy implements ConverterStrategy<ContextHolder<?>>
     }
 
     @Override
-    public String doConvert(ContextHolder<?> contextHolder, String input) {
+    public String doConvert(ContextHolder<Map<String, Object>> contextHolder, String input) {
 
         if (input == null) {
             return null;

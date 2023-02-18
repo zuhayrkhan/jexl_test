@@ -1,11 +1,12 @@
 package com.zuhayrkhan.converter.strategy.jexl.context;
 
-import com.zuhayrkhan.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.MapContext;
 
 import java.util.function.Consumer;
 
-public class JexlContextBuilder implements ContextBuilder<JexlContextHolder> {
+public class JexlContextBuilder implements ContextBuilder<JexlContext, JexlContextHolder> {
 
     private final JexlContextHolder jexlContextHolder;
 
@@ -18,7 +19,7 @@ public class JexlContextBuilder implements ContextBuilder<JexlContextHolder> {
     }
 
     @Override
-    public ContextBuilder<JexlContextHolder> populateFrom(Consumer<JexlContextHolder> contextHolderConsumer) {
+    public ContextBuilder<JexlContext, JexlContextHolder> populateFrom(Consumer<JexlContextHolder> contextHolderConsumer) {
         contextHolderConsumer.accept(jexlContextHolder);
         return this;
     }

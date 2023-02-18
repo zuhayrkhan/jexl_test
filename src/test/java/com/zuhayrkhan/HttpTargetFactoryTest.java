@@ -1,8 +1,8 @@
 package com.zuhayrkhan;
 
-import com.zuhayrkhan.context.ContextHolder;
-import com.zuhayrkhan.context.ConverterStrategy;
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
+import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +13,7 @@ import java.net.URI;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ class HttpTargetFactoryTest {
     @BeforeEach
     void setUp() {
 //        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new JexlConverterStrategy(clock);
-        ConverterStrategy<? extends ContextHolder<?>> converterStrategy = new MapConverterStrategy(clock);
+        ConverterStrategy<ContextHolder<Map<String, Object>>> converterStrategy = new MapConverterStrategy(clock);
         httpTargetFactory = new HttpTargetFactory(
                 new SimpleExpressionConverter<>(converterStrategy));
     }
