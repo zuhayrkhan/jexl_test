@@ -22,17 +22,15 @@ public class SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER extends ContextHo
         this.converterStrategy = converterStrategy;
     }
 
-    public String convert(String httpTargetURIAsString) {
+    public String convert(String input) {
 
-        LOGGER.info("httpTargetURIAsString={}", httpTargetURIAsString);
+        LOGGER.info("input={}", input);
 
-        if (httpTargetURIAsString == null) {
+        if (input == null) {
             return null;
         }
 
-        CONTEXT_HOLDER contextHolder = converterStrategy.newCreateContextHolder(clock);
-
-        String result = converterStrategy.doConvert(contextHolder, httpTargetURIAsString);
+        String result = converterStrategy.doConvert(converterStrategy.createContextHolder(clock), input);
 
         LOGGER.info("result={}", result);
 

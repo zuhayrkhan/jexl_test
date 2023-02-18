@@ -10,22 +10,14 @@ import org.apache.commons.jexl3.JexlExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Clock;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
-public class JexlConverterStrategy implements ConverterStrategy<JexlContext, JexlContextHolder,
-        JexlContextBuilder> {
+public class JexlConverterStrategy implements ConverterStrategy<JexlContext, JexlContextHolder, JexlContextBuilder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JexlConverterStrategy.class);
 
-    private final Clock clock;
-
     private final JexlEngine jexlEngine = new JexlBuilder().cache(512).strict(true).silent(false).create();
-
-    public JexlConverterStrategy(Clock clock) {
-        this.clock = clock;
-    }
 
     @Override
     public Supplier<JexlContextBuilder> getContextBuilderFactory() {

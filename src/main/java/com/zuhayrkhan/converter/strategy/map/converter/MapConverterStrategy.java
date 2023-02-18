@@ -1,40 +1,27 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
-import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
+import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Clock;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class MapConverterStrategy implements ConverterStrategy<Map<String, Object>,
-        ContextHolder<Map<String, Object>>, ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> {
+        MapContextHolder, MapContextBuilder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);
 
-    private final Clock clock;
-
-    public MapConverterStrategy(Clock clock) {
-        this.clock = clock;
+    @Override
+    public Supplier<MapContextBuilder> getContextBuilderFactory() {
+        return MapContextBuilder::new;
     }
 
     @Override
-    public Supplier<ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> getContextBuilderFactory() {
-        return new Supplier<ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>>() {
-            @Override
-            public ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>> get() {
-                return new MapContextBuilder();
-            }
-        };
-    }
-
-    @Override
-    public String doConvert(ContextHolder<Map<String, Object>> contextHolder, String input) {
+    public String doConvert(MapContextHolder contextHolder, String input) {
 
         if (input == null) {
             return null;

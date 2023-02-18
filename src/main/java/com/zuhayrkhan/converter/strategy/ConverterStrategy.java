@@ -14,7 +14,7 @@ public interface ConverterStrategy<CONTEXT, CONTEXT_HOLDER extends
 
     Supplier<CONTEXT_BUILDER> getContextBuilderFactory();
 
-    default CONTEXT_HOLDER newCreateContextHolder(Clock clock) {
+    default CONTEXT_HOLDER createContextHolder(Clock clock) {
         return getContextBuilderFactory().get()
                 .populateFrom(context -> context.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)

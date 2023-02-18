@@ -19,13 +19,13 @@ class SimpleExpressionConverterTest {
     public static Stream<SimpleExpressionConverterParams> createURIStringsAndExpectedWithJexl() {
         return Stream.of(
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithAllVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()))
                         .build(),
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithSomeVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()))
                         .build(),
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithNoVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()))
                         .build()
         );
     }
@@ -33,13 +33,13 @@ class SimpleExpressionConverterTest {
     public static Stream<SimpleExpressionConverterParams> createURIStringsAndExpectedWithMap() {
         return Stream.of(
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithAllVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()))
                         .build(),
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithSomeVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()))
                         .build(),
                 SimpleExpressionConverterParams.simpleExpressionConverterParamsWithNoVars()
-                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy(CLOCK)))
+                        .withSimpleExpressionConverter(new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()))
                         .build()
         );
     }

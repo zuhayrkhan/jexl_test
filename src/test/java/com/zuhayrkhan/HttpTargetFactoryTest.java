@@ -1,11 +1,11 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
+import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
+import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
 import org.apache.commons.jexl3.JexlContext;
@@ -28,9 +28,9 @@ class HttpTargetFactoryTest {
 
     public static Stream<HttpTargetTestParams> createURIStringsAndExpectedMapStrategy() {
 
-        HttpTargetFactory<Map<String, Object>, ContextHolder<Map<String, Object>>,
-                ContextBuilder<Map<String, Object>, ContextHolder<Map<String, Object>>>> httpTargetFactory = new HttpTargetFactory<>(
-                new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy(CLOCK)));
+        HttpTargetFactory<Map<String, Object>, MapContextHolder, MapContextBuilder> httpTargetFactory =
+                new HttpTargetFactory<>(
+                        new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars()
@@ -45,7 +45,7 @@ class HttpTargetFactoryTest {
     public static Stream<HttpTargetTestParams> createURIStringsAndExpectedJexlStrategy() {
 
         HttpTargetFactory<JexlContext, JexlContextHolder, JexlContextBuilder> httpTargetFactory =
-                new HttpTargetFactory<>(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy(CLOCK)));
+                new HttpTargetFactory<>(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars()
