@@ -1,9 +1,9 @@
 package com.zuhayrkhan.converter;
 
+import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
@@ -38,14 +38,14 @@ class SimpleExpressionConverterTest {
     }
 
     public static Stream<SimpleExpressionConverterParams> createURIStringsAndExpectedWithMap() {
-        SimpleExpressionConverter<SimpleMapContext, MapContextBuilder> simpleExpressionConverter =
+        SimpleExpressionConverter<SimpleMapContext, ContextBuilder> simpleExpressionConverter =
                 new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy());
         return Stream.of(
-                simpleExpressionConverterParamsWithAllVars(SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                simpleExpressionConverterParamsWithAllVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithSomeVars(SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                simpleExpressionConverterParamsWithSomeVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithNoVars(SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                simpleExpressionConverterParamsWithNoVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build()
         );
     }

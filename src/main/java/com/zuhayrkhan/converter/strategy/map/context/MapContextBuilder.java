@@ -7,21 +7,21 @@ import java.util.function.Consumer;
 
 public class MapContextBuilder implements ContextBuilder {
 
-    private final MapContextHolder contents;
+    private final ContextHolder contextHolder;
 
-    public MapContextBuilder(SimpleMapContext context) {
-        contents = new MapContextHolder(context);
+    public MapContextBuilder(ContextHolder contextHolder) {
+        this.contextHolder = contextHolder;
     }
 
     @Override
     public ContextBuilder populateFrom(
             Consumer<ContextHolder> contextConsumer) {
-        contextConsumer.accept(contents);
+        contextConsumer.accept(contextHolder);
         return this;
     }
 
     @Override
     public ContextHolder build() {
-        return contents;
+        return contextHolder;
     }
 }

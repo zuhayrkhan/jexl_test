@@ -8,17 +8,19 @@ import java.time.Clock;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public interface ConverterStrategy<CONTEXT, CONTEXT_BUILDER extends ContextBuilder> {
+public interface ConverterStrategy<CONTEXT> {
 
     String CLOCK_IN_CONTEXT = "clock";
 
     Supplier<CONTEXT> getContextFactory();
 
-    Function<CONTEXT, CONTEXT_BUILDER> getContextBuilderFactory();
+    Function<CONTEXT, ContextHolder> getContextHolderFactory();
+
+    Function<ContextHolder, ContextBuilder> getContextBuilderFactory();
 
     default String convert(final Clock clock, final String input) {
         CONTEXT context = getContextFactory().get();
-        ContextHolder contextHolder = getContextBuilderFactory().apply(context)
+        ContextHolder contextHolder = getContextBuilderFactory().apply(getContextHolderFactory().apply(context))
                 .populateFrom(thisContext -> thisContext.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
                 .build();

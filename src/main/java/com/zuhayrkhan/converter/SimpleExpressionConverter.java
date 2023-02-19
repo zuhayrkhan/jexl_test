@@ -13,9 +13,9 @@ public class SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER extends ContextB
 
     private final Clock clock;
 
-    private final ConverterStrategy<CONTEXT, CONTEXT_BUILDER> converterStrategy;
+    private final ConverterStrategy<CONTEXT> converterStrategy;
 
-    public SimpleExpressionConverter(Clock clock, ConverterStrategy<CONTEXT, CONTEXT_BUILDER> converterStrategy) {
+    public SimpleExpressionConverter(Clock clock, ConverterStrategy<CONTEXT> converterStrategy) {
         this.clock = clock;
         this.converterStrategy = converterStrategy;
     }

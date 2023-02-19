@@ -1,10 +1,9 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
+import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
@@ -26,41 +25,41 @@ class HttpTargetFactoryTest {
 
     private static final Clock CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    public static Stream<HttpTargetTestParams<SimpleMapContext, MapContextHolder, MapContextBuilder>>
+    public static Stream<HttpTargetTestParams<SimpleMapContext, MapContextHolder, ContextBuilder>>
     createURIStringsAndExpectedMapStrategy() {
 
-        HttpTargetFactory<SimpleMapContext, MapContextHolder, MapContextBuilder> httpTargetFactory =
+        HttpTargetFactory<SimpleMapContext, MapContextHolder, ContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(
                         new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars(
-                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithSomeVars(
-                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithNoVars(
-                        SimpleMapContext.class, MapContextHolder.class, MapContextBuilder.class)
+                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build()
         );
     }
 
-    public static Stream<HttpTargetTestParams<JexlContext, JexlContextHolder, JexlContextBuilder>>
+    public static Stream<HttpTargetTestParams<JexlContext, ContextHolder, ContextBuilder>>
     createURIStringsAndExpectedJexlStrategy() {
 
-        HttpTargetFactory<JexlContext, JexlContextHolder, JexlContextBuilder> httpTargetFactory =
+        HttpTargetFactory<JexlContext, ContextHolder, ContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy()));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars(
-                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                        JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithSomeVars(
-                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                        JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithNoVars(
-                        JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                        JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build()
         );
     }

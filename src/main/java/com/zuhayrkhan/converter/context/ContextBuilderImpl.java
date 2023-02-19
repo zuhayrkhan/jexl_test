@@ -2,11 +2,11 @@ package com.zuhayrkhan.converter.context;
 
 import java.util.function.Consumer;
 
-public class ContextBuilderImpl<CONTEXT, CONTEXT_HOLDER extends ContextHolder> implements ContextBuilder {
+public class ContextBuilderImpl implements ContextBuilder {
 
-    private final CONTEXT_HOLDER contextHolder;
+    private final ContextHolder contextHolder;
 
-    public ContextBuilderImpl(CONTEXT_HOLDER contextHolder) {
+    public ContextBuilderImpl(ContextHolder contextHolder) {
         this.contextHolder = contextHolder;
     }
 
