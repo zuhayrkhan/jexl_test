@@ -3,11 +3,11 @@ package com.zuhayrkhan.converter;
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
 
-class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
+class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+        CONTEXT_BUILDER extends ContextBuilder> {
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithAllVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -19,8 +19,8 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
                         "&untilDate=1970-01-01T00:00:00Z");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithSomeVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -34,8 +34,8 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
                         "&constant=aConstant");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithNoVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -45,15 +45,15 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
                         "?constant=aConstant");
     }
 
-    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
+    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder> {
 
-        private SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter;
+        private SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter;
         private String httpTargetURIAsString;
         private String expectedURI;
 
         Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withSimpleExpressionConverter(
-                SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter) {
+                SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter) {
             this.simpleExpressionConverter = simpleExpressionConverter;
             return this;
         }
@@ -78,11 +78,11 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
 
     }
 
-    private final SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter;
+    private final SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter;
     private final String httpTargetURIAsString;
     private final String expectedURI;
 
-    SimpleExpressionConverterParams(SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter,
+    SimpleExpressionConverterParams(SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter,
                                     String httpTargetURIAsString,
                                     String expectedURI) {
         this.simpleExpressionConverter = simpleExpressionConverter;
@@ -90,7 +90,7 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
         this.expectedURI = expectedURI;
     }
 
-    public SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> getSimpleExpressionConverter() {
+    public SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> getSimpleExpressionConverter() {
         return simpleExpressionConverter;
     }
 

@@ -1,10 +1,11 @@
 package com.zuhayrkhan.converter.strategy.map.context;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
+import com.zuhayrkhan.converter.context.ContextHolder;
 
 import java.util.function.Consumer;
 
-public class MapContextBuilder implements ContextBuilder<SimpleMapContext, MapContextHolder> {
+public class MapContextBuilder implements ContextBuilder {
 
     private final MapContextHolder contents;
 
@@ -13,14 +14,14 @@ public class MapContextBuilder implements ContextBuilder<SimpleMapContext, MapCo
     }
 
     @Override
-    public ContextBuilder<SimpleMapContext, MapContextHolder> populateFrom(
-            Consumer<MapContextHolder> contextConsumer) {
+    public ContextBuilder populateFrom(
+            Consumer<ContextHolder> contextConsumer) {
         contextConsumer.accept(contents);
         return this;
     }
 
     @Override
-    public MapContextHolder build() {
+    public ContextHolder build() {
         return contents;
     }
 }

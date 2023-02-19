@@ -1,8 +1,8 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
+import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextBuilder;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContextImpl;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class MapConverterStrategy implements ConverterStrategy<SimpleMapContext,
-        MapContextHolder, MapContextBuilder> {
+        MapContextBuilder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapConverterStrategy.class);
 
@@ -28,7 +28,7 @@ public class MapConverterStrategy implements ConverterStrategy<SimpleMapContext,
     }
 
     @Override
-    public String doConvert(MapContextHolder contextHolder, SimpleMapContext context, String input) {
+    public String doConvert(ContextHolder contextHolder, SimpleMapContext context, String input) {
 
         if (input == null) {
             return null;

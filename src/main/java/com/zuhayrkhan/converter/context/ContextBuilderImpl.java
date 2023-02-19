@@ -2,7 +2,7 @@ package com.zuhayrkhan.converter.context;
 
 import java.util.function.Consumer;
 
-public class ContextBuilderImpl<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>> implements ContextBuilder<CONTEXT, CONTEXT_HOLDER> {
+public class ContextBuilderImpl<CONTEXT, CONTEXT_HOLDER extends ContextHolder> implements ContextBuilder {
 
     private final CONTEXT_HOLDER contextHolder;
 
@@ -11,13 +11,13 @@ public class ContextBuilderImpl<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CO
     }
 
     @Override
-    public ContextBuilder<CONTEXT, CONTEXT_HOLDER> populateFrom(Consumer<CONTEXT_HOLDER> contextConsumer) {
+    public ContextBuilder populateFrom(Consumer<ContextHolder> contextConsumer) {
         contextConsumer.accept(contextHolder);
         return this;
     }
 
     @Override
-    public CONTEXT_HOLDER build() {
+    public ContextHolder build() {
         return contextHolder;
     }
 

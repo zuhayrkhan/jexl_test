@@ -2,7 +2,7 @@ package com.zuhayrkhan.converter.strategy.map.context;
 
 import com.zuhayrkhan.converter.context.ContextHolder;
 
-public class MapContextHolder implements ContextHolder<SimpleMapContext> {
+public class MapContextHolder implements ContextHolder {
 
     private final SimpleMapContext content;
 
@@ -20,8 +20,4 @@ public class MapContextHolder implements ContextHolder<SimpleMapContext> {
         content.put(key, value);
     }
 
-    @Override
-    public SimpleMapContext unWrapContext() {
-        return content;
-    }
 }

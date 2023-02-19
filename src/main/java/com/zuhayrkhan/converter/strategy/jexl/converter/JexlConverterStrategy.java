@@ -1,8 +1,8 @@
 package com.zuhayrkhan.converter.strategy.jexl.converter;
 
+import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import org.apache.commons.jexl3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class JexlConverterStrategy implements ConverterStrategy<JexlContext, JexlContextHolder, JexlContextBuilder> {
+public class JexlConverterStrategy implements ConverterStrategy<JexlContext, JexlContextBuilder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JexlConverterStrategy.class);
 
@@ -28,7 +28,7 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext, Jex
     }
 
     @Override
-    public String doConvert(JexlContextHolder jexlContextHolder, JexlContext context, String input) {
+    public String doConvert(ContextHolder jexlContextHolder, JexlContext context, String input) {
 
         String httpTargetURIAsJexlExpression = createJexlExpression(input);
 

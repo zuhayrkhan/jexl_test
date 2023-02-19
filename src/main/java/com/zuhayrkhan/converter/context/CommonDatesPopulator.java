@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 
 public class CommonDatesPopulator {
 
-    public static void addCommonDatesToContext(ContextHolder<?> contextHolder) {
+    public static void addCommonDatesToContext(ContextHolder contextHolder) {
 
         Clock clock = (Clock) contextHolder.getFromContext(ConverterStrategy.CLOCK_IN_CONTEXT);
 

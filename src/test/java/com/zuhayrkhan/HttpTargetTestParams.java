@@ -3,11 +3,11 @@ package com.zuhayrkhan;
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
 
-class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
+class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+        CONTEXT_BUILDER extends ContextBuilder> {
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithSomeConstAmongVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -27,8 +27,8 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
                 .withExpectedResponseMatchForSuccess("1970-01-01T00:00:00Z");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithSomeVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -48,8 +48,8 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
                 .withExpectedResponseMatchForSuccess("1970-01-01T00:00:00Z");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>>
+    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder>
     Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetTestParamsWithNoVars(
             Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
         return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
@@ -65,8 +65,8 @@ class HttpTargetTestParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT
                 .withExpectedResponseMatchForSuccess(null);
     }
 
-    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-            CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
+    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+            CONTEXT_BUILDER extends ContextBuilder> {
 
         private HttpTargetFactory<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> httpTargetFactory;
         private String httpTargetURIAsString;

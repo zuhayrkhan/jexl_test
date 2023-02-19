@@ -7,12 +7,12 @@ import com.zuhayrkhan.model.HttpTarget;
 
 import java.net.URI;
 
-public class HttpTargetFactory<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>,
-        CONTEXT_BUILDER extends ContextBuilder<CONTEXT, CONTEXT_HOLDER>> {
+public class HttpTargetFactory<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
+        CONTEXT_BUILDER extends ContextBuilder> {
 
-    private final SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter;
+    private final SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter;
 
-    public HttpTargetFactory(SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverter) {
+    public HttpTargetFactory(SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter) {
         this.simpleExpressionConverter = simpleExpressionConverter;
     }
 

@@ -3,7 +3,7 @@ package com.zuhayrkhan.converter.strategy.jexl.context;
 import com.zuhayrkhan.converter.context.ContextHolder;
 import org.apache.commons.jexl3.JexlContext;
 
-public class JexlContextHolder implements ContextHolder<JexlContext> {
+public class JexlContextHolder implements ContextHolder {
 
     private final JexlContext jexlContext;
 
@@ -19,11 +19,6 @@ public class JexlContextHolder implements ContextHolder<JexlContext> {
     @Override
     public void addIntoContext(String key, Object value) {
         jexlContext.set(key, value);
-    }
-
-    @Override
-    public JexlContext unWrapContext() {
-        return jexlContext;
     }
 
 }

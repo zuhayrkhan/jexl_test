@@ -2,10 +2,10 @@ package com.zuhayrkhan.converter.context;
 
 import java.util.function.Consumer;
 
-public interface ContextBuilder<CONTEXT, CONTEXT_HOLDER extends ContextHolder<CONTEXT>> {
+public interface ContextBuilder {
 
-    ContextBuilder<CONTEXT, CONTEXT_HOLDER> populateFrom(Consumer<CONTEXT_HOLDER> contextConsumer);
+    ContextBuilder populateFrom(Consumer<ContextHolder> contextConsumer);
 
-    CONTEXT_HOLDER build();
+    ContextHolder build();
 
 }
