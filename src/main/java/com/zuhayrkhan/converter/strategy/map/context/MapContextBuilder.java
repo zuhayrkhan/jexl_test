@@ -6,7 +6,11 @@ import java.util.function.Consumer;
 
 public class MapContextBuilder implements ContextBuilder<SimpleMapContext, MapContextHolder> {
 
-    private final MapContextHolder contents = new MapContextHolder(new SimpleMapContextImpl());
+    private final MapContextHolder contents;
+
+    public MapContextBuilder(SimpleMapContext context) {
+        contents = new MapContextHolder(context);
+    }
 
     @Override
     public ContextBuilder<SimpleMapContext, MapContextHolder> populateFrom(

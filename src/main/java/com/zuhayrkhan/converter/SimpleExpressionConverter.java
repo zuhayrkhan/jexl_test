@@ -30,7 +30,7 @@ public class SimpleExpressionConverter<CONTEXT, CONTEXT_HOLDER extends ContextHo
             return null;
         }
 
-        String result = converterStrategy.doConvert(converterStrategy.createContextHolder(clock), input);
+        String result = converterStrategy.convert(clock, input);
 
         LOGGER.info("result={}", result);
 

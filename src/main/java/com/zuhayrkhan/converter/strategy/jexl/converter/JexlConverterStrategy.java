@@ -3,14 +3,12 @@ package com.zuhayrkhan.converter.strategy.jexl.converter;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
 import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlContext;
-import org.apache.commons.jexl3.JexlEngine;
-import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class JexlConverterStrategy implements ConverterStrategy<JexlContext, JexlContextHolder, JexlContextBuilder> {
@@ -20,12 +18,17 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext, Jex
     private final JexlEngine jexlEngine = new JexlBuilder().cache(512).strict(true).silent(false).create();
 
     @Override
-    public Supplier<JexlContextBuilder> getContextBuilderFactory() {
+    public Supplier<JexlContext> getContextFactory() {
+        return MapContext::new;
+    }
+
+    @Override
+    public Function<JexlContext, JexlContextBuilder> getContextBuilderFactory() {
         return JexlContextBuilder::new;
     }
 
     @Override
-    public String doConvert(JexlContextHolder jexlContextHolder, String input) {
+    public String doConvert(JexlContextHolder jexlContextHolder, JexlContext context, String input) {
 
         String httpTargetURIAsJexlExpression = createJexlExpression(input);
 
@@ -33,7 +36,7 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext, Jex
 
         JexlExpression jexlExpression = jexlEngine.createExpression(httpTargetURIAsJexlExpression);
 
-        return (String) jexlExpression.evaluate(jexlContextHolder.unWrapContext());
+        return (String) jexlExpression.evaluate(context);
     }
 
     private static String createJexlExpression(String expressionToBeConverted) {

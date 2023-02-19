@@ -2,7 +2,6 @@ package com.zuhayrkhan.converter.strategy.jexl.context;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import org.apache.commons.jexl3.JexlContext;
-import org.apache.commons.jexl3.MapContext;
 
 import java.util.function.Consumer;
 
@@ -10,8 +9,8 @@ public class JexlContextBuilder implements ContextBuilder<JexlContext, JexlConte
 
     private final JexlContextHolder jexlContextHolder;
 
-    public JexlContextBuilder() {
-        this(new JexlContextHolder(new MapContext()));
+    public JexlContextBuilder(JexlContext jexlContext) {
+        this(new JexlContextHolder(jexlContext));
     }
 
     public JexlContextBuilder(JexlContextHolder jexlContextHolder) {
