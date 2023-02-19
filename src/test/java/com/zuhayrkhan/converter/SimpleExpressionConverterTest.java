@@ -1,8 +1,7 @@
 package com.zuhayrkhan.converter;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextBuilder;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
+import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
 import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
 import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
@@ -23,16 +22,16 @@ class SimpleExpressionConverterTest {
 
     private static final Clock CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    public static Stream<SimpleExpressionConverterParams<JexlContext, JexlContextHolder, JexlContextBuilder>>
+    public static Stream<SimpleExpressionConverterParams<JexlContext, ContextHolder, ContextBuilder>>
     createURIStringsAndExpectedWithJexl() {
-        SimpleExpressionConverter<JexlContext, JexlContextBuilder> simpleExpressionConverter =
+        SimpleExpressionConverter<JexlContext, ContextBuilder> simpleExpressionConverter =
                 new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy());
         return Stream.of(
-                simpleExpressionConverterParamsWithAllVars(JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                simpleExpressionConverterParamsWithAllVars(JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithSomeVars(JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                simpleExpressionConverterParamsWithSomeVars(JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithNoVars(JexlContext.class, JexlContextHolder.class, JexlContextBuilder.class)
+                simpleExpressionConverterParamsWithNoVars(JexlContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build()
         );
     }
