@@ -1,7 +1,6 @@
-package com.zuhayrkhan.converter.strategy.map.converter;
+package com.zuhayrkhan.converter.strategy;
 
 import com.zuhayrkhan.converter.context.*;
-import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

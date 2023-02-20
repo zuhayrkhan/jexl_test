@@ -1,10 +1,9 @@
-package com.zuhayrkhan.converter.strategy.jexl.converter;
+package com.zuhayrkhan.converter.strategy;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextBuilderImpl;
 import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.converter.context.ContextHolderImpl;
-import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import org.apache.commons.jexl3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
