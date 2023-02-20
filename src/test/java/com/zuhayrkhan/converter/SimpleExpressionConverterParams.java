@@ -1,16 +1,10 @@
 package com.zuhayrkhan.converter;
 
-import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.context.ContextHolder;
+class SimpleExpressionConverterParams<CONTEXT> {
 
-class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-        CONTEXT_BUILDER extends ContextBuilder> {
-
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-            CONTEXT_BUILDER extends ContextBuilder>
-    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithAllVars(
-            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
-        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
+    static <CONTEXT>
+    Builder<CONTEXT> simpleExpressionConverterParamsWithAllVars(Class<CONTEXT> contextClass) {
+        return new Builder<CONTEXT>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}")
@@ -19,11 +13,9 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
                         "&untilDate=1970-01-01T00:00:00Z");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-            CONTEXT_BUILDER extends ContextBuilder>
-    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithSomeVars(
-            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
-        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
+    static <CONTEXT>
+    Builder<CONTEXT> simpleExpressionConverterParamsWithSomeVars(Class<CONTEXT> contextClass) {
+        return new Builder<CONTEXT>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?fromDate=${yesterday}" +
                         "&untilDate=${today}" +
@@ -34,41 +26,38 @@ class SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER extends ContextHol
                         "&constant=aConstant");
     }
 
-    static <CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-            CONTEXT_BUILDER extends ContextBuilder>
-    Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> simpleExpressionConverterParamsWithNoVars(
-            Class<CONTEXT> contextClass, Class<CONTEXT_HOLDER> contextHolderClass, Class<CONTEXT_BUILDER> contextBuilderClass) {
-        return new Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER>()
+    static <CONTEXT>
+    Builder<CONTEXT> simpleExpressionConverterParamsWithNoVars(Class<CONTEXT> contextClass) {
+        return new Builder<CONTEXT>()
                 .withHttpTargetURIAsString("http://localhost:8080/reports/" +
                         "?constant=aConstant")
                 .withExpectedURI("http://localhost:8080/reports/" +
                         "?constant=aConstant");
     }
 
-    static class Builder<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-            CONTEXT_BUILDER extends ContextBuilder> {
+    static class Builder<CONTEXT> {
 
         private SimpleExpressionConverter<CONTEXT> simpleExpressionConverter;
         private String httpTargetURIAsString;
         private String expectedURI;
 
-        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withSimpleExpressionConverter(
+        Builder<CONTEXT> withSimpleExpressionConverter(
                 SimpleExpressionConverter<CONTEXT> simpleExpressionConverter) {
             this.simpleExpressionConverter = simpleExpressionConverter;
             return this;
         }
 
-        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withHttpTargetURIAsString(String httpTargetURIAsString) {
+        Builder<CONTEXT> withHttpTargetURIAsString(String httpTargetURIAsString) {
             this.httpTargetURIAsString = httpTargetURIAsString;
             return this;
         }
 
-        Builder<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> withExpectedURI(String expectedURI) {
+        Builder<CONTEXT> withExpectedURI(String expectedURI) {
             this.expectedURI = expectedURI;
             return this;
         }
 
-        SimpleExpressionConverterParams<CONTEXT, CONTEXT_HOLDER, CONTEXT_BUILDER> build() {
+        SimpleExpressionConverterParams<CONTEXT> build() {
             return new SimpleExpressionConverterParams<>(
                     simpleExpressionConverter,
                     httpTargetURIAsString,
