@@ -2,9 +2,8 @@ package com.zuhayrkhan.converter;
 
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
-import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import org.apache.commons.jexl3.JexlContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,11 +39,11 @@ class SimpleExpressionConverterTest {
         SimpleExpressionConverter<SimpleMapContext, ContextBuilder> simpleExpressionConverter =
                 new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy());
         return Stream.of(
-                simpleExpressionConverterParamsWithAllVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                simpleExpressionConverterParamsWithAllVars(SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithSomeVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                simpleExpressionConverterParamsWithSomeVars(SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build(),
-                simpleExpressionConverterParamsWithNoVars(SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                simpleExpressionConverterParamsWithNoVars(SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withSimpleExpressionConverter(simpleExpressionConverter).build()
         );
     }

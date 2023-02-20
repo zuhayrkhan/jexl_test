@@ -1,12 +1,7 @@
 package com.zuhayrkhan.converter.strategy.map.converter;
 
-import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.context.ContextBuilderImpl;
-import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.context.*;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
-import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
-import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContextImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +20,10 @@ public class MapConverterStrategy implements ConverterStrategy<SimpleMapContext>
 
     @Override
     public Function<SimpleMapContext, ContextHolder> getContextHolderFactory() {
-        return MapContextHolder::new;
+        return simpleMapContext -> new ContextHolderImpl(
+                simpleMapContext::put,
+                simpleMapContext::get
+        );
     }
 
     @Override

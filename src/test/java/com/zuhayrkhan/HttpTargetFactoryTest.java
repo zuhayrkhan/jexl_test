@@ -3,9 +3,8 @@ package com.zuhayrkhan;
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.jexl.converter.JexlConverterStrategy;
-import com.zuhayrkhan.converter.strategy.map.context.MapContextHolder;
-import com.zuhayrkhan.converter.strategy.map.context.SimpleMapContext;
 import com.zuhayrkhan.converter.strategy.map.converter.MapConverterStrategy;
 import com.zuhayrkhan.model.HttpTarget;
 import org.apache.commons.jexl3.JexlContext;
@@ -25,22 +24,22 @@ class HttpTargetFactoryTest {
 
     private static final Clock CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"));
 
-    public static Stream<HttpTargetTestParams<SimpleMapContext, MapContextHolder, ContextBuilder>>
+    public static Stream<HttpTargetTestParams<SimpleMapContext, ContextHolder, ContextBuilder>>
     createURIStringsAndExpectedMapStrategy() {
 
-        HttpTargetFactory<SimpleMapContext, MapContextHolder, ContextBuilder> httpTargetFactory =
+        HttpTargetFactory<SimpleMapContext, ContextHolder, ContextBuilder> httpTargetFactory =
                 new HttpTargetFactory<>(
                         new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy()));
 
         return Stream.of(
                 httpTargetTestParamsWithSomeConstAmongVars(
-                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                        SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithSomeVars(
-                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                        SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build(),
                 httpTargetTestParamsWithNoVars(
-                        SimpleMapContext.class, MapContextHolder.class, ContextBuilder.class)
+                        SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)
                         .withHttpTargetFactory(httpTargetFactory).build()
         );
     }

@@ -1,4 +1,4 @@
-package com.zuhayrkhan.converter.strategy.map.context;
+package com.zuhayrkhan.converter.context;
 
 import java.util.Map;
 

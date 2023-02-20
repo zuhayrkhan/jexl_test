@@ -3,8 +3,8 @@ package com.zuhayrkhan.converter.strategy.jexl.converter;
 import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.context.ContextBuilderImpl;
 import com.zuhayrkhan.converter.context.ContextHolder;
+import com.zuhayrkhan.converter.context.ContextHolderImpl;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
-import com.zuhayrkhan.converter.strategy.jexl.context.JexlContextHolder;
 import org.apache.commons.jexl3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,10 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext> {
 
     @Override
     public Function<JexlContext, ContextHolder> getContextHolderFactory() {
-        return JexlContextHolder::new;
+        return jexlContext -> new ContextHolderImpl(
+                jexlContext::set,
+                jexlContext::get
+        );
     }
 
     @Override
