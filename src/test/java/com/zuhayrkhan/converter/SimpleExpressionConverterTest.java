@@ -23,7 +23,7 @@ class SimpleExpressionConverterTest {
 
     public static Stream<SimpleExpressionConverterParams<JexlContext, ContextHolder, ContextBuilder>>
     createURIStringsAndExpectedWithJexl() {
-        SimpleExpressionConverter<JexlContext, ContextBuilder> simpleExpressionConverter =
+        SimpleExpressionConverter<JexlContext> simpleExpressionConverter =
                 new SimpleExpressionConverter<>(CLOCK, new JexlConverterStrategy());
         return Stream.of(
                 simpleExpressionConverterParamsWithAllVars(JexlContext.class, ContextHolder.class, ContextBuilder.class)
@@ -36,7 +36,7 @@ class SimpleExpressionConverterTest {
     }
 
     public static Stream<SimpleExpressionConverterParams> createURIStringsAndExpectedWithMap() {
-        SimpleExpressionConverter<SimpleMapContext, ContextBuilder> simpleExpressionConverter =
+        SimpleExpressionConverter<SimpleMapContext> simpleExpressionConverter =
                 new SimpleExpressionConverter<>(CLOCK, new MapConverterStrategy());
         return Stream.of(
                 simpleExpressionConverterParamsWithAllVars(SimpleMapContext.class, ContextHolder.class, ContextBuilder.class)

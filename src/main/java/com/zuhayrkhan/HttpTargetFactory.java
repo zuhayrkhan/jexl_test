@@ -1,18 +1,15 @@
 package com.zuhayrkhan;
 
 import com.zuhayrkhan.converter.SimpleExpressionConverter;
-import com.zuhayrkhan.converter.context.ContextBuilder;
-import com.zuhayrkhan.converter.context.ContextHolder;
 import com.zuhayrkhan.model.HttpTarget;
 
 import java.net.URI;
 
-public class HttpTargetFactory<CONTEXT, CONTEXT_HOLDER extends ContextHolder,
-        CONTEXT_BUILDER extends ContextBuilder> {
+public class HttpTargetFactory<CONTEXT> {
 
-    private final SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter;
+    private final SimpleExpressionConverter<CONTEXT> simpleExpressionConverter;
 
-    public HttpTargetFactory(SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER> simpleExpressionConverter) {
+    public HttpTargetFactory(SimpleExpressionConverter<CONTEXT> simpleExpressionConverter) {
         this.simpleExpressionConverter = simpleExpressionConverter;
     }
 

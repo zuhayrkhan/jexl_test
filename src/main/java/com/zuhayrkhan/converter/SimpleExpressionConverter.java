@@ -1,13 +1,12 @@
 package com.zuhayrkhan.converter;
 
-import com.zuhayrkhan.converter.context.ContextBuilder;
 import com.zuhayrkhan.converter.strategy.ConverterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
 
-public class SimpleExpressionConverter<CONTEXT, CONTEXT_BUILDER extends ContextBuilder> {
+public class SimpleExpressionConverter<CONTEXT> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleExpressionConverter.class);
 
