@@ -48,7 +48,7 @@ class SimpleExpressionConverterTest {
     @ParameterizedTest
     @MethodSource({"createURIStringsAndExpectedWithJexl", "createURIStringsAndExpectedWithMap"})
     void can_specify_target_with_date_vars_and_have_them_converted(
-            SimpleExpressionConverterParams<SimpleMapContext> simpleExpressionConverterParams) {
+            SimpleExpressionConverterParams<?> simpleExpressionConverterParams) {
 
         String converted = simpleExpressionConverterParams.getSimpleExpressionConverter().convert(
                 simpleExpressionConverterParams.getHttpTargetURIAsString());

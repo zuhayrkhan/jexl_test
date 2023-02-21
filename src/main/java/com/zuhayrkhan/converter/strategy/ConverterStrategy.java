@@ -14,13 +14,11 @@ public interface ConverterStrategy<CONTEXT> {
 
     Supplier<CONTEXT> getContextFactory();
 
-    Function<CONTEXT, ContextHolder> getContextHolderFactory();
-
-    Function<ContextHolder, ContextBuilder> getContextBuilderFactory();
+    Function<CONTEXT, ContextBuilder> getContextBuilderFactoryNew();
 
     default String convert(final Clock clock, final String input) {
         CONTEXT context = getContextFactory().get();
-        ContextHolder contextHolder = getContextBuilderFactory().apply(getContextHolderFactory().apply(context))
+        ContextHolder contextHolder = getContextBuilderFactoryNew().apply(context)
                 .populateFrom(thisContext -> thisContext.addIntoContext(CLOCK_IN_CONTEXT, clock))
                 .populateFrom(CommonDatesPopulator::addCommonDatesToContext)
                 .build();

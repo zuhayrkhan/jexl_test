@@ -18,16 +18,13 @@ public class MapConverterStrategy implements ConverterStrategy<SimpleMapContext>
     }
 
     @Override
-    public Function<SimpleMapContext, ContextHolder> getContextHolderFactory() {
-        return simpleMapContext -> new ContextHolderImpl(
-                simpleMapContext::put,
-                simpleMapContext::get
+    public Function<SimpleMapContext, ContextBuilder> getContextBuilderFactoryNew() {
+        return (simpleMapContext) -> new ContextBuilderImpl(
+                new ContextHolderImpl(
+                        simpleMapContext::put,
+                        simpleMapContext::get
+                )
         );
-    }
-
-    @Override
-    public Function<ContextHolder, ContextBuilder> getContextBuilderFactory() {
-        return ContextBuilderImpl::new;
     }
 
     @Override

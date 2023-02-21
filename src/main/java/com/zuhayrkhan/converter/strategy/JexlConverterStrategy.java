@@ -24,16 +24,13 @@ public class JexlConverterStrategy implements ConverterStrategy<JexlContext> {
     }
 
     @Override
-    public Function<JexlContext, ContextHolder> getContextHolderFactory() {
-        return jexlContext -> new ContextHolderImpl(
-                jexlContext::set,
-                jexlContext::get
+    public Function<JexlContext, ContextBuilder> getContextBuilderFactoryNew() {
+        return (jexlContext) -> new ContextBuilderImpl(
+                new ContextHolderImpl(
+                        jexlContext::set,
+                        jexlContext::get
+                )
         );
-    }
-
-    @Override
-    public Function<ContextHolder, ContextBuilder> getContextBuilderFactory() {
-        return ContextBuilderImpl::new;
     }
 
     @Override
